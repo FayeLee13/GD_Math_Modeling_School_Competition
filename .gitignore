@@ -16,5 +16,6 @@ tmp/
 temp/
 
 .ipynb_checkpoints/
+.vscode/
 *.log
 *.tmp
