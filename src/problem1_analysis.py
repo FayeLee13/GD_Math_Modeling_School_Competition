@@ -24,25 +24,72 @@ def describe_data_quality(name: str, x: pd.DataFrame, y: pd.DataFrame) -> pd.Dat
     rows = []
     for role, frame in [("input", x), ("output", y)]:
         for col in frame.columns:
-            series = frame[col]
+            series = pd.to_numeric(frame[col], errors="coerce")
+            q25 = series.quantile(0.25)
+            q75 = series.quantile(0.75)
+            iqr = q75 - q25
+            lower_bound = q25 - 1.5 * iqr
+            upper_bound = q75 + 1.5 * iqr
+            outlier_mask = (series < lower_bound) | (series > upper_bound)
+            std = series.std()
+            mean = series.mean()
+            value_range = series.max() - series.min()
             rows.append(
                 {
                     "dataset": name,
                     "role": role,
                     "variable": col,
                     "n_rows": int(len(series)),
+                    "non_missing_count": int(series.notna().sum()),
                     "missing_count": int(series.isna().sum()),
                     "missing_rate": float(series.isna().mean()),
-                    "mean": _safe_float(series.mean()),
-                    "std": _safe_float(series.std()),
+                    "mean": _safe_float(mean),
+                    "std": _safe_float(std),
                     "min": _safe_float(series.min()),
-                    "q25": _safe_float(series.quantile(0.25)),
+                    "q25": _safe_float(q25),
                     "median": _safe_float(series.median()),
-                    "q75": _safe_float(series.quantile(0.75)),
+                    "q75": _safe_float(q75),
                     "max": _safe_float(series.max()),
-                    "zero_std": bool(series.std() == 0),
+                    "range": _safe_float(value_range),
+                    "iqr": _safe_float(iqr),
+                    "skew": _safe_float(series.skew()),
+                    "cv_abs": _safe_float(abs(std / mean)) if pd.notna(mean) and mean != 0 else None,
+                    "iqr_lower_bound": _safe_float(lower_bound),
+                    "iqr_upper_bound": _safe_float(upper_bound),
+                    "iqr_outlier_count": int(outlier_mask.sum()),
+                    "iqr_outlier_rate": float(outlier_mask.mean()),
+                    "zero_std": bool(std == 0),
+                    "needs_missing_imputation": bool(series.isna().any()),
+                    "needs_outlier_review": bool(outlier_mask.mean() > 0.05),
+                    "needs_standardization": bool(role == "input" and pd.notna(std) and std > 0),
                 }
             )
+    return pd.DataFrame(rows)
+
+
+def summarize_preprocessing_diagnostics(quality: pd.DataFrame) -> pd.DataFrame:
+    """Summarize descriptive-statistics diagnostics at dataset level."""
+    rows = []
+    for dataset, group in quality.groupby("dataset", sort=False):
+        inputs = group[group["role"] == "input"]
+        input_ranges = inputs["range"].replace(0, np.nan).dropna()
+        scale_ratio = float(input_ranges.max() / input_ranges.min()) if len(input_ranges) else np.nan
+        rows.append(
+            {
+                "dataset": dataset,
+                "n_variables": int(len(group)),
+                "n_input_features": int(len(inputs)),
+                "total_missing": int(group["missing_count"].sum()),
+                "max_missing_rate": float(group["missing_rate"].max()),
+                "zero_std_variables": int(group["zero_std"].sum()),
+                "variables_with_iqr_outliers": int((group["iqr_outlier_count"] > 0).sum()),
+                "max_iqr_outlier_rate": float(group["iqr_outlier_rate"].max()),
+                "input_scale_range_ratio": scale_ratio,
+                "standardization_recommended": bool(scale_ratio > 10 if pd.notna(scale_ratio) else False),
+                "missing_imputation_recommended": bool(group["missing_count"].sum() > 0),
+                "outlier_review_recommended": bool((group["iqr_outlier_rate"] > 0.05).any()),
+            }
+        )
     return pd.DataFrame(rows)
 
 

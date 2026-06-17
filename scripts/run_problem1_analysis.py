@@ -11,7 +11,11 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.dataset_config import DATASET_SPECS, load_dataset
-from src.problem1_analysis import analyze_dataset, describe_data_quality
+from src.problem1_analysis import (
+    analyze_dataset,
+    describe_data_quality,
+    summarize_preprocessing_diagnostics,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -47,11 +51,13 @@ def main() -> None:
         result["redundancy_pairs"].to_csv(tables_dir / f"{spec.name}_redundancy_pairs.csv", index=False, encoding="utf-8-sig")
 
     quality = pd.concat(all_quality, ignore_index=True)
+    preprocessing = summarize_preprocessing_diagnostics(quality)
     scores = pd.concat(all_scores, ignore_index=True)
     correlations = pd.concat(all_corr, ignore_index=True)
     redundancy = pd.concat(all_redundancy, ignore_index=True)
 
     quality.to_csv(tables_dir / "data_quality_summary.csv", index=False, encoding="utf-8-sig")
+    preprocessing.to_csv(tables_dir / "preprocessing_diagnostics.csv", index=False, encoding="utf-8-sig")
     scores.to_csv(tables_dir / "feature_scores_all.csv", index=False, encoding="utf-8-sig")
     correlations.to_csv(tables_dir / "input_output_correlations_all.csv", index=False, encoding="utf-8-sig")
     redundancy.to_csv(tables_dir / "redundancy_pairs_all.csv", index=False, encoding="utf-8-sig")
@@ -64,7 +70,7 @@ def main() -> None:
     )
     selected.to_csv(tables_dir / "selected_features_by_dataset.csv", index=False, encoding="utf-8-sig")
 
-    write_markdown_summary(args.out_dir / "problem1_summary.md", scores, quality, redundancy, selected)
+    write_markdown_summary(args.out_dir / "problem1_summary.md", scores, quality, preprocessing, redundancy, selected)
     print(f"[problem1] done. Results saved to {args.out_dir}", flush=True)
 
 
@@ -72,6 +78,7 @@ def write_markdown_summary(
     path: Path,
     scores: pd.DataFrame,
     quality: pd.DataFrame,
+    preprocessing: pd.DataFrame,
     redundancy: pd.DataFrame,
     selected: pd.DataFrame,
 ) -> None:
@@ -94,16 +101,35 @@ def write_markdown_summary(
         "## 数据质量概况",
         "",
     ]
-    quality_summary = (
-        quality.groupby("dataset")
-        .agg(
-            variables=("variable", "count"),
-            total_missing=("missing_count", "sum"),
-            zero_std_count=("zero_std", "sum"),
-        )
-        .reset_index()
-    )
-    lines.extend(_markdown_table(quality_summary))
+    preprocessing_view = preprocessing.copy()
+    for col in ["max_missing_rate", "max_iqr_outlier_rate", "input_scale_range_ratio"]:
+        preprocessing_view[col] = preprocessing_view[col].round(4)
+    lines.extend(_markdown_table(preprocessing_view))
+    lines.extend(["", "## 描述性统计变量诊断示例", ""])
+    quality_view = quality[
+        [
+            "dataset",
+            "role",
+            "variable",
+            "n_rows",
+            "missing_count",
+            "mean",
+            "std",
+            "min",
+            "q25",
+            "median",
+            "q75",
+            "max",
+            "skew",
+            "iqr_outlier_rate",
+            "zero_std",
+            "needs_standardization",
+        ]
+    ].copy()
+    numeric_cols = ["mean", "std", "min", "q25", "median", "q75", "max", "skew", "iqr_outlier_rate"]
+    for col in numeric_cols:
+        quality_view[col] = quality_view[col].round(4)
+    lines.extend(_markdown_table(quality_view.groupby("dataset").head(5)))
     lines.extend(["", "## 各数据集推荐特征", ""])
     lines.extend(_markdown_table(selected))
     lines.extend(["", "## 各数据集 Top 特征", ""])
@@ -137,6 +163,8 @@ def write_markdown_summary(
             "## 输出文件",
             "",
             "- `tables/feature_scores_all.csv`：全部数据集特征综合得分。",
+            "- `tables/data_quality_summary.csv`：变量级描述性统计和数据质量诊断。",
+            "- `tables/preprocessing_diagnostics.csv`：数据集级预处理建议。",
             "- `tables/input_output_correlations_all.csv`：输入-输出 Pearson/Spearman 相关性长表。",
             "- `tables/redundancy_pairs_all.csv`：输入变量间冗余关系。",
             "- `tables/selected_features_by_dataset.csv`：按 DP-FSM 规则推荐的特征集。",

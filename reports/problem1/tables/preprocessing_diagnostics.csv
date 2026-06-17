@@ -1,0 +1,10 @@
+﻿dataset,n_variables,n_input_features,total_missing,max_missing_rate,zero_std_variables,variables_with_iqr_outliers,max_iqr_outlier_rate,input_scale_range_ratio,standardization_recommended,missing_imputation_recommended,outlier_review_recommended
+chf,7,6,0,0.0,0,5,0.052,1499238.3188509746,True,False,True
+heat,8,7,0,0.0,0,6,0.007,8130051.36409443,True,False,False
+xs,9,8,0,0.0,0,8,0.012,567.6914477361652,True,False,False
+bwr,14,9,0,0.0,0,5,0.1375,256.7933333333334,True,False,True
+fp,17,13,0,0.0,0,15,0.015,4160869565217.391,True,False,False
+rea,8,4,0,0.0,0,7,0.033,8790883.09498974,True,False,False
+powery,28,6,0,0.0,0,4,0.005,1.0016750807092338,False,False,False
+htgr,12,8,0,0.0,0,4,0.004660452729693742,1.0004013704431898,False,False,False
+microreactor,12,8,0,0.0,0,3,0.009320905459387484,1.0050969671122887,False,False,False
