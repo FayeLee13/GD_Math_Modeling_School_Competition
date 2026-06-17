@@ -3,6 +3,17 @@
 This repository contains materials and reproducible code for the GD math
 modeling school competition, problem B.
 
+## Environment
+
+The recommended local environment is the existing Conda environment
+`pytorch_gpu`.
+
+```powershell
+conda activate pytorch_gpu
+```
+
+All scripts below assume they are run from the repository root.
+
 ## Problem 1: Feature Analysis and Preprocessing
 
 Run the full DP-FSM feature screening workflow:
@@ -54,3 +65,29 @@ The ranking score follows the current problem 2 summary:
 ```text
 Score = 0.4 * R2 rank + 0.35 * NRMSE rank + 0.25 * NMAE rank
 ```
+
+## Problem 3: Model Explainability and Physical Consistency
+
+Run the full TPCI-EM explainability workflow:
+
+```powershell
+python scripts/run_problem3_explainability.py
+```
+
+The script uses the full-feature best model selected in problem 2 for each
+dataset, then writes:
+
+- `reports/problem3/problem3_summary.md`
+- `reports/problem3/tables/permutation_importance_all.csv`
+- `reports/problem3/tables/sensitivity_analysis_all.csv`
+- `reports/problem3/tables/partial_response_all.csv`
+- `reports/problem3/tables/physical_consistency_summary.csv`
+- `reports/problem3/figures/*.png`
+
+## Run Everything
+
+```powershell
+python scripts/run_all.py
+```
+
+Project structure is documented in `docs/project_architecture.md`.

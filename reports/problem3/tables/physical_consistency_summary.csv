@@ -1,0 +1,10 @@
+﻿dataset,model,output_dim,top_features,top_physical_score,positive_importance_ratio_top3,known_direction_consistency_rate,physical_consistency_level,interpretation_note
+chf,RandomForest,1,"L (m), Xe (-), G (kg m-2s-1)",1.0,1.0,1.0,high,Key dependencies are physically plausible and response checks are mostly regular.
+heat,GradientBoosting,1,"qprime, k, L",1.0,1.0,0.6666666666666666,high,Key dependencies are physically plausible and response checks are mostly regular.
+xs,Ridge,1,"FissionThermal, CaptureFast, Scatter12",1.0,1.0,1.0,high,Key dependencies are physically plausible and response checks are mostly regular.
+bwr,GradientBoosting,5,"CRD, vanA, vanB",0.8666666666666667,1.0,not_configured,medium,"Key dependencies are plausible, but explicit direction checks are limited for this dataset."
+fp,Ridge,4,"ax_pow, clad_T, pellet_h",1.0,1.0,not_configured,medium,"Key dependencies are plausible, but explicit direction checks are limited for this dataset."
+rea,GradientBoosting,4,"rod_worth, beta, h_gap",1.0,1.0,1.0,high,Key dependencies are physically plausible and response checks are mostly regular.
+powery,Ridge,22,"CR6, CR2, CR5",1.0,1.0,not_configured,medium,"Key dependencies are plausible, but explicit direction checks are limited for this dataset."
+htgr,GradientBoosting,4,"theta5, theta8, theta1",1.0,1.0,not_configured,medium,"Key dependencies are plausible, but explicit direction checks are limited for this dataset."
+microreactor,GradientBoosting,4,"theta4, theta6, theta1",1.0,1.0,not_configured,medium,"Key dependencies are plausible, but explicit direction checks are limited for this dataset."
