@@ -185,6 +185,31 @@ def best_models(metrics: pd.DataFrame) -> pd.DataFrame:
     return best
 
 
+def best_models_by_target(target_metrics: pd.DataFrame) -> pd.DataFrame:
+    ranked_frames = []
+    for (_, target), group in target_metrics.groupby(["dataset", "target"], sort=False):
+        ranked = group.copy()
+        ranked["r2_rank"] = ranked["r2"].rank(ascending=False, method="min")
+        ranked["nrmse_rank"] = ranked["nrmse"].rank(ascending=True, method="min")
+        ranked["nmae_rank"] = ranked["nmae"].rank(ascending=True, method="min")
+        ranked["target_rank_score"] = (
+            0.4 * ranked["r2_rank"] + 0.35 * ranked["nrmse_rank"] + 0.25 * ranked["nmae_rank"]
+        )
+        ranked["target_model_rank"] = ranked["target_rank_score"].rank(ascending=True, method="min").astype(int)
+        ranked_frames.append(ranked)
+
+    ranked_all = pd.concat(ranked_frames, ignore_index=True)
+    return (
+        ranked_all.sort_values(
+            ["dataset", "target", "target_rank_score", "nrmse", "nmae"],
+            ascending=[True, True, True, True, True],
+        )
+        .groupby(["dataset", "target"], as_index=False)
+        .head(1)
+        .reset_index(drop=True)
+    )
+
+
 def feature_set_comparison(best: pd.DataFrame) -> pd.DataFrame:
     rows = []
     for dataset, group in best.groupby("dataset"):

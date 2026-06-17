@@ -15,6 +15,7 @@ from src.problem3_explainability import (
     explain_dataset,
     save_explainability_figures,
 )
+from src.variable_metadata import build_expected_direction_table, build_variable_physical_meaning
 
 
 def parse_args() -> argparse.Namespace:
@@ -79,13 +80,17 @@ def main() -> None:
     sensitivity = pd.concat(sensitivity_parts, ignore_index=True)
     pdp = pd.concat(pdp_parts, ignore_index=True)
     consistency = pd.concat(consistency_parts, ignore_index=True)
+    variable_meaning = build_variable_physical_meaning(DATASET_SPECS)
+    expected_directions = build_expected_direction_table(DATASET_SPECS)
 
+    variable_meaning.to_csv(tables_dir / "variable_physical_meaning.csv", index=False, encoding="utf-8-sig")
+    expected_directions.to_csv(tables_dir / "expected_direction_checks.csv", index=False, encoding="utf-8-sig")
     permutation.to_csv(tables_dir / "permutation_importance_all.csv", index=False, encoding="utf-8-sig")
     sensitivity.to_csv(tables_dir / "sensitivity_analysis_all.csv", index=False, encoding="utf-8-sig")
     pdp.to_csv(tables_dir / "partial_response_all.csv", index=False, encoding="utf-8-sig")
     consistency.to_csv(tables_dir / "physical_consistency_summary.csv", index=False, encoding="utf-8-sig")
 
-    write_markdown_summary(args.out_dir / "problem3_summary.md", consistency, permutation, sensitivity)
+    write_markdown_summary(args.out_dir / "problem3_summary.md", consistency, permutation, sensitivity, variable_meaning)
     print(f"[problem3] done. Results saved to {args.out_dir}", flush=True)
 
 
@@ -94,6 +99,7 @@ def write_markdown_summary(
     consistency: pd.DataFrame,
     permutation: pd.DataFrame,
     sensitivity: pd.DataFrame,
+    variable_meaning: pd.DataFrame,
 ) -> None:
     consistency_view = consistency.copy()
     for col in consistency_view.select_dtypes(include="number").columns:
@@ -131,6 +137,17 @@ def write_markdown_summary(
         ]
     ]
 
+    meaning_view = variable_meaning[
+        [
+            "dataset",
+            "role",
+            "variable",
+            "physical_meaning",
+            "physical_score",
+            "expected_direction_summary",
+        ]
+    ].copy()
+
     lines = [
         "# B题问题3：模型可解释性分析结果",
         "",
@@ -143,9 +160,17 @@ def write_markdown_summary(
         "- 事后解释：对关键变量进行 ±10% 敏感性扰动，并为前两个关键变量生成部分响应数据。",
         "- 一致性判断：综合关键变量物理合理性、排列重要性和已知方向扰动结果，给出高/中/低物理一致性等级。",
         "",
-        "## 物理一致性总表",
+        "## 变量物理含义示例",
         "",
     ]
+    lines.extend(_markdown_table(meaning_view.groupby("dataset").head(6)))
+    lines.extend(
+        [
+            "",
+        "## 物理一致性总表",
+        "",
+        ]
+    )
     lines.extend(_markdown_table(consistency_view))
     lines.extend(["", "## 排列重要性 Top 特征", ""])
     lines.extend(_markdown_table(top_perm))
@@ -156,6 +181,8 @@ def write_markdown_summary(
             "",
             "## 输出文件",
             "",
+            "- `tables/variable_physical_meaning.csv`：输入/输出变量的物理含义、物理评分和方向预期摘要。",
+            "- `tables/expected_direction_checks.csv`：已配置的物理方向预期，用于敏感性一致性判断。",
             "- `tables/permutation_importance_all.csv`：所有数据集的排列重要性。",
             "- `tables/sensitivity_analysis_all.csv`：关键变量 ±10% 敏感性扰动结果。",
             "- `tables/partial_response_all.csv`：关键变量部分响应数据。",

@@ -19,6 +19,7 @@ from sklearn.model_selection import train_test_split
 
 from .dataset_config import DatasetSpec
 from .problem2_modeling import build_models
+from .variable_metadata import PHYSICAL_EXPECTED_DIRECTIONS
 
 
 @dataclass(frozen=True)
@@ -27,46 +28,6 @@ class ExplainabilityResult:
     sensitivity: pd.DataFrame
     partial_dependence: pd.DataFrame
     consistency: pd.DataFrame
-
-
-PHYSICAL_EXPECTED_DIRECTIONS: dict[str, dict[str, dict[str, int]]] = {
-    "heat": {
-        "T": {
-            "qprime": 1,
-            "Tin": 1,
-            "R": 1,
-            "L": 1,
-            "k": -1,
-            "mdot": -1,
-            "Cp": -1,
-        }
-    },
-    "rea": {
-        "max_power": {"rod_worth": 1, "beta": -1},
-        "burst_width": {"rod_worth": -1, "beta": 1},
-        "max_Tf": {"rod_worth": 1, "h_gap": -1},
-        "avg_Tcool": {"rod_worth": 1, "gamma_frac": 1},
-    },
-    "xs": {
-        "k": {
-            "FissionFast": 1,
-            "FissionThermal": 1,
-            "CaptureFast": -1,
-            "CaptureThermal": -1,
-            "Scatter12": 1,
-            "Scatter21": -1,
-        }
-    },
-    "chf": {
-        "CHF (kW m-2)": {
-            "G (kg m-2s-1)": 1,
-            "P (kPa)": 1,
-            "D (m)": -1,
-            "L (m)": -1,
-            "Xe (-)": -1,
-        }
-    },
-}
 
 
 def explain_dataset(

@@ -16,6 +16,7 @@ from src.problem1_analysis import (
     describe_data_quality,
     summarize_preprocessing_diagnostics,
 )
+from src.variable_metadata import build_physical_score_rationale
 
 
 def parse_args() -> argparse.Namespace:
@@ -52,12 +53,14 @@ def main() -> None:
 
     quality = pd.concat(all_quality, ignore_index=True)
     preprocessing = summarize_preprocessing_diagnostics(quality)
+    physical_rationale = build_physical_score_rationale(DATASET_SPECS)
     scores = pd.concat(all_scores, ignore_index=True)
     correlations = pd.concat(all_corr, ignore_index=True)
     redundancy = pd.concat(all_redundancy, ignore_index=True)
 
     quality.to_csv(tables_dir / "data_quality_summary.csv", index=False, encoding="utf-8-sig")
     preprocessing.to_csv(tables_dir / "preprocessing_diagnostics.csv", index=False, encoding="utf-8-sig")
+    physical_rationale.to_csv(tables_dir / "physical_score_rationale.csv", index=False, encoding="utf-8-sig")
     scores.to_csv(tables_dir / "feature_scores_all.csv", index=False, encoding="utf-8-sig")
     correlations.to_csv(tables_dir / "input_output_correlations_all.csv", index=False, encoding="utf-8-sig")
     redundancy.to_csv(tables_dir / "redundancy_pairs_all.csv", index=False, encoding="utf-8-sig")
@@ -70,7 +73,15 @@ def main() -> None:
     )
     selected.to_csv(tables_dir / "selected_features_by_dataset.csv", index=False, encoding="utf-8-sig")
 
-    write_markdown_summary(args.out_dir / "problem1_summary.md", scores, quality, preprocessing, redundancy, selected)
+    write_markdown_summary(
+        args.out_dir / "problem1_summary.md",
+        scores,
+        quality,
+        preprocessing,
+        physical_rationale,
+        redundancy,
+        selected,
+    )
     print(f"[problem1] done. Results saved to {args.out_dir}", flush=True)
 
 
@@ -79,6 +90,7 @@ def write_markdown_summary(
     scores: pd.DataFrame,
     quality: pd.DataFrame,
     preprocessing: pd.DataFrame,
+    physical_rationale: pd.DataFrame,
     redundancy: pd.DataFrame,
     selected: pd.DataFrame,
 ) -> None:
@@ -130,6 +142,19 @@ def write_markdown_summary(
     for col in numeric_cols:
         quality_view[col] = quality_view[col].round(4)
     lines.extend(_markdown_table(quality_view.groupby("dataset").head(5)))
+    lines.extend(["", "## 物理合理性评分依据示例", ""])
+    rationale_view = physical_rationale[
+        [
+            "dataset",
+            "feature",
+            "physical_meaning",
+            "physical_score",
+            "relevance_level",
+            "score_rationale",
+        ]
+    ].copy()
+    rationale_view["physical_score"] = rationale_view["physical_score"].round(2)
+    lines.extend(_markdown_table(rationale_view.groupby("dataset").head(4)))
     lines.extend(["", "## 各数据集推荐特征", ""])
     lines.extend(_markdown_table(selected))
     lines.extend(["", "## 各数据集 Top 特征", ""])
@@ -165,6 +190,7 @@ def write_markdown_summary(
             "- `tables/feature_scores_all.csv`：全部数据集特征综合得分。",
             "- `tables/data_quality_summary.csv`：变量级描述性统计和数据质量诊断。",
             "- `tables/preprocessing_diagnostics.csv`：数据集级预处理建议。",
+            "- `tables/physical_score_rationale.csv`：物理合理性评分、变量含义和评分依据。",
             "- `tables/input_output_correlations_all.csv`：输入-输出 Pearson/Spearman 相关性长表。",
             "- `tables/redundancy_pairs_all.csv`：输入变量间冗余关系。",
             "- `tables/selected_features_by_dataset.csv`：按 DP-FSM 规则推荐的特征集。",

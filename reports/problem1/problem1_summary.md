@@ -77,6 +77,47 @@
 | microreactor | input | theta4 | 751 | 0 | 3.2545 | 1.7804 | 0.005 | 1.8483 | 3.2089 | 4.8612 | 6.2827 | -0.0204 | 0.0 | False | True |
 | microreactor | input | theta5 | 751 | 0 | 3.1417 | 1.8012 | 0.0056 | 1.6551 | 3.1264 | 4.6121 | 6.2626 | 0.0066 | 0.0 | False | True |
 
+## 物理合理性评分依据示例
+
+| dataset | feature | physical_meaning | physical_score | relevance_level | score_rationale |
+| --- | --- | --- | --- | --- | --- |
+| chf | D (m) | flow channel hydraulic diameter | 1.0 | direct_physics | flow channel hydraulic diameter; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| chf | L (m) | heated length of the channel | 1.0 | direct_physics | heated length of the channel; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| chf | P (kPa) | system pressure | 1.0 | direct_physics | system pressure; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| chf | G (kg m-2s-1) | mass flux | 1.0 | direct_physics | mass flux; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| heat | qprime | linear heat generation rate | 1.0 | direct_physics | linear heat generation rate; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| heat | mdot | coolant mass flow rate | 1.0 | direct_physics | coolant mass flow rate; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| heat | Tin | inlet temperature | 1.0 | direct_physics | inlet temperature; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| heat | R | fuel or heat-source radius | 1.0 | direct_physics | fuel or heat-source radius; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| xs | FissionFast | fast-group fission cross section | 1.0 | direct_physics | fast-group fission cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| xs | CaptureFast | fast-group capture cross section | 1.0 | direct_physics | fast-group capture cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| xs | FissionThermal | thermal-group fission cross section | 1.0 | direct_physics | thermal-group fission cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| xs | CaptureThermal | thermal-group capture cross section | 1.0 | direct_physics | thermal-group capture cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| bwr | PSZ | BWR core operating or shape parameter from the problem data | 0.8 | clear_operating_relevance | BWR core operating or shape parameter from the problem data; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
+| bwr | DOM | BWR core operating or shape parameter from the problem data | 0.8 | clear_operating_relevance | BWR core operating or shape parameter from the problem data; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
+| bwr | vanA | BWR vaned-device or flow-distribution parameter A | 0.8 | clear_operating_relevance | BWR vaned-device or flow-distribution parameter A; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
+| bwr | vanB | BWR vaned-device or flow-distribution parameter B | 0.8 | clear_operating_relevance | BWR vaned-device or flow-distribution parameter B; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
+| fp | fuel_dens | fuel density | 1.0 | direct_physics | fuel density; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| fp | porosity | fuel porosity | 1.0 | direct_physics | fuel porosity; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| fp | clad_thick | cladding thickness | 1.0 | direct_physics | cladding thickness; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| fp | pellet_OD | fuel pellet outer diameter | 1.0 | direct_physics | fuel pellet outer diameter; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| rea | rod_worth | reactivity worth of the control rod | 1.0 | direct_physics | reactivity worth of the control rod; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| rea | beta | effective delayed neutron fraction | 1.0 | direct_physics | effective delayed neutron fraction; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| rea | h_gap | fuel-cladding gap heat-transfer coefficient | 1.0 | direct_physics | fuel-cladding gap heat-transfer coefficient; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| rea | gamma_frac | gamma heating fraction | 1.0 | direct_physics | gamma heating fraction; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| powery | CR1 | control rod group 1 position or setting | 1.0 | direct_physics | control rod group 1 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| powery | CR2 | control rod group 2 position or setting | 1.0 | direct_physics | control rod group 2 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| powery | CR3 | control rod group 3 position or setting | 1.0 | direct_physics | control rod group 3 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| powery | CR4 | control rod group 4 position or setting | 1.0 | direct_physics | control rod group 4 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| htgr | theta1 | HTGR design or angular parameter 1 | 1.0 | direct_physics | HTGR design or angular parameter 1; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| htgr | theta2 | HTGR design or angular parameter 2 | 1.0 | direct_physics | HTGR design or angular parameter 2; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| htgr | theta3 | HTGR design or angular parameter 3 | 1.0 | direct_physics | HTGR design or angular parameter 3; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| htgr | theta4 | HTGR design or angular parameter 4 | 1.0 | direct_physics | HTGR design or angular parameter 4; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| microreactor | theta1 | microreactor design or angular parameter 1 | 1.0 | direct_physics | microreactor design or angular parameter 1; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| microreactor | theta2 | microreactor design or angular parameter 2 | 1.0 | direct_physics | microreactor design or angular parameter 2; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| microreactor | theta3 | microreactor design or angular parameter 3 | 1.0 | direct_physics | microreactor design or angular parameter 3; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| microreactor | theta4 | microreactor design or angular parameter 4 | 1.0 | direct_physics | microreactor design or angular parameter 4; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+
 ## 各数据集推荐特征
 
 | dataset | selected_features |
@@ -153,6 +194,7 @@
 - `tables/feature_scores_all.csv`：全部数据集特征综合得分。
 - `tables/data_quality_summary.csv`：变量级描述性统计和数据质量诊断。
 - `tables/preprocessing_diagnostics.csv`：数据集级预处理建议。
+- `tables/physical_score_rationale.csv`：物理合理性评分、变量含义和评分依据。
 - `tables/input_output_correlations_all.csv`：输入-输出 Pearson/Spearman 相关性长表。
 - `tables/redundancy_pairs_all.csv`：输入变量间冗余关系。
 - `tables/selected_features_by_dataset.csv`：按 DP-FSM 规则推荐的特征集。

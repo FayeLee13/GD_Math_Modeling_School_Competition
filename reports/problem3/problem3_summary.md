@@ -9,6 +9,65 @@
 - 事后解释：对关键变量进行 ±10% 敏感性扰动，并为前两个关键变量生成部分响应数据。
 - 一致性判断：综合关键变量物理合理性、排列重要性和已知方向扰动结果，给出高/中/低物理一致性等级。
 
+## 变量物理含义示例
+
+| dataset | role | variable | physical_meaning | physical_score | expected_direction_summary |
+| --- | --- | --- | --- | --- | --- |
+| chf | input | D (m) | flow channel hydraulic diameter | 1.0 | CHF (kW m-2): negative |
+| chf | input | L (m) | heated length of the channel | 1.0 | CHF (kW m-2): negative |
+| chf | input | P (kPa) | system pressure | 1.0 | CHF (kW m-2): positive |
+| chf | input | G (kg m-2s-1) | mass flux | 1.0 | CHF (kW m-2): positive |
+| chf | input | Tin (C) | inlet coolant temperature | 1.0 | not_configured |
+| chf | input | Xe (-) | exit quality | 1.0 | CHF (kW m-2): negative |
+| heat | input | qprime | linear heat generation rate | 1.0 | T: positive |
+| heat | input | mdot | coolant mass flow rate | 1.0 | T: negative |
+| heat | input | Tin | inlet temperature | 1.0 | T: positive |
+| heat | input | R | fuel or heat-source radius | 1.0 | T: positive |
+| heat | input | L | heated length | 1.0 | T: positive |
+| heat | input | Cp | coolant heat capacity | 1.0 | T: negative |
+| xs | input | FissionFast | fast-group fission cross section | 1.0 | k: positive |
+| xs | input | CaptureFast | fast-group capture cross section | 1.0 | k: negative |
+| xs | input | FissionThermal | thermal-group fission cross section | 1.0 | k: positive |
+| xs | input | CaptureThermal | thermal-group capture cross section | 1.0 | k: negative |
+| xs | input | Scatter12 | group-1 to group-2 scattering cross section | 1.0 | k: positive |
+| xs | input | Scatter11 | within-group scattering cross section for group 1 | 1.0 | not_configured |
+| bwr | input | PSZ | BWR core operating or shape parameter from the problem data | 0.8 | not_configured |
+| bwr | input | DOM | BWR core operating or shape parameter from the problem data | 0.8 | not_configured |
+| bwr | input | vanA | BWR vaned-device or flow-distribution parameter A | 0.8 | not_configured |
+| bwr | input | vanB | BWR vaned-device or flow-distribution parameter B | 0.8 | not_configured |
+| bwr | input | subcool | coolant inlet subcooling | 1.0 | not_configured |
+| bwr | input | CRD | control rod drive or rod insertion state | 1.0 | not_configured |
+| fp | input | fuel_dens | fuel density | 1.0 | not_configured |
+| fp | input | porosity | fuel porosity | 1.0 | not_configured |
+| fp | input | clad_thick | cladding thickness | 1.0 | not_configured |
+| fp | input | pellet_OD | fuel pellet outer diameter | 1.0 | not_configured |
+| fp | input | pellet_h | fuel pellet height | 1.0 | not_configured |
+| fp | input | gap_thick | fuel-cladding gap thickness | 1.0 | not_configured |
+| rea | input | rod_worth | reactivity worth of the control rod | 1.0 | max_power: positive; burst_width: negative; max_Tf: positive; avg_Tcool: positive |
+| rea | input | beta | effective delayed neutron fraction | 1.0 | max_power: negative; burst_width: positive |
+| rea | input | h_gap | fuel-cladding gap heat-transfer coefficient | 1.0 | max_Tf: negative |
+| rea | input | gamma_frac | gamma heating fraction | 1.0 | avg_Tcool: positive |
+| rea | output | max_power | maximum power |  | model output |
+| rea | output | burst_width | power burst width |  | model output |
+| powery | input | CR1 | control rod group 1 position or setting | 1.0 | not_configured |
+| powery | input | CR2 | control rod group 2 position or setting | 1.0 | not_configured |
+| powery | input | CR3 | control rod group 3 position or setting | 1.0 | not_configured |
+| powery | input | CR4 | control rod group 4 position or setting | 1.0 | not_configured |
+| powery | input | CR5 | control rod group 5 position or setting | 1.0 | not_configured |
+| powery | input | CR6 | control rod group 6 position or setting | 1.0 | not_configured |
+| htgr | input | theta1 | HTGR design or angular parameter 1 | 1.0 | not_configured |
+| htgr | input | theta2 | HTGR design or angular parameter 2 | 1.0 | not_configured |
+| htgr | input | theta3 | HTGR design or angular parameter 3 | 1.0 | not_configured |
+| htgr | input | theta4 | HTGR design or angular parameter 4 | 1.0 | not_configured |
+| htgr | input | theta5 | HTGR design or angular parameter 5 | 1.0 | not_configured |
+| htgr | input | theta6 | HTGR design or angular parameter 6 | 1.0 | not_configured |
+| microreactor | input | theta1 | microreactor design or angular parameter 1 | 1.0 | not_configured |
+| microreactor | input | theta2 | microreactor design or angular parameter 2 | 1.0 | not_configured |
+| microreactor | input | theta3 | microreactor design or angular parameter 3 | 1.0 | not_configured |
+| microreactor | input | theta4 | microreactor design or angular parameter 4 | 1.0 | not_configured |
+| microreactor | input | theta5 | microreactor design or angular parameter 5 | 1.0 | not_configured |
+| microreactor | input | theta6 | microreactor design or angular parameter 6 | 1.0 | not_configured |
+
 ## 物理一致性总表
 
 | dataset | model | output_dim | top_features | top_physical_score | positive_importance_ratio_top3 | known_direction_consistency_rate | physical_consistency_level | interpretation_note |
@@ -160,6 +219,8 @@
 
 ## 输出文件
 
+- `tables/variable_physical_meaning.csv`：输入/输出变量的物理含义、物理评分和方向预期摘要。
+- `tables/expected_direction_checks.csv`：已配置的物理方向预期，用于敏感性一致性判断。
 - `tables/permutation_importance_all.csv`：所有数据集的排列重要性。
 - `tables/sensitivity_analysis_all.csv`：关键变量 ±10% 敏感性扰动结果。
 - `tables/partial_response_all.csv`：关键变量部分响应数据。

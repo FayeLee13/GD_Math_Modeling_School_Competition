@@ -13,6 +13,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from src.dataset_config import DATASET_SPECS, load_dataset
 from src.problem2_modeling import (
     best_models,
+    best_models_by_target,
     evaluate_dataset,
     feature_set_comparison,
     save_figures,
@@ -61,18 +62,20 @@ def main() -> None:
     target_metrics = pd.concat(target_parts, ignore_index=True)
     predictions = pd.concat(prediction_parts, ignore_index=True)
     best = best_models(metrics)
+    target_best = best_models_by_target(target_metrics)
     comparison = feature_set_comparison(best)
     factors = dataset_factor_table(best, comparison)
 
     metrics.to_csv(tables_dir / "model_metrics_all.csv", index=False, encoding="utf-8-sig")
     target_metrics.to_csv(tables_dir / "target_metrics_all.csv", index=False, encoding="utf-8-sig")
+    target_best.to_csv(tables_dir / "best_models_by_target.csv", index=False, encoding="utf-8-sig")
     predictions.to_csv(tables_dir / "predictions_all.csv", index=False, encoding="utf-8-sig")
     best.to_csv(tables_dir / "best_models_by_dataset.csv", index=False, encoding="utf-8-sig")
     comparison.to_csv(tables_dir / "feature_set_comparison.csv", index=False, encoding="utf-8-sig")
     factors.to_csv(tables_dir / "dataset_factor_analysis.csv", index=False, encoding="utf-8-sig")
 
     save_figures(metrics, best, comparison, figures_dir)
-    write_markdown_summary(args.out_dir / "problem2_summary.md", best, comparison, factors)
+    write_markdown_summary(args.out_dir / "problem2_summary.md", best, target_best, comparison, factors)
     print(f"[problem2] done. Results saved to {args.out_dir}", flush=True)
 
 
@@ -129,7 +132,13 @@ def dataset_factor_table(best: pd.DataFrame, comparison: pd.DataFrame) -> pd.Dat
     return factors.sort_values("full_best_mean_nrmse").reset_index(drop=True)
 
 
-def write_markdown_summary(path: Path, best: pd.DataFrame, comparison: pd.DataFrame, factors: pd.DataFrame) -> None:
+def write_markdown_summary(
+    path: Path,
+    best: pd.DataFrame,
+    target_best: pd.DataFrame,
+    comparison: pd.DataFrame,
+    factors: pd.DataFrame,
+) -> None:
     best_view = best[
         [
             "dataset",
@@ -138,15 +147,34 @@ def write_markdown_summary(path: Path, best: pd.DataFrame, comparison: pd.DataFr
             "input_dim",
             "output_dim",
             "mean_r2",
-            "mean_nrmse",
+            "mean_mae",
+            "mean_rmse",
             "mean_nmae",
+            "mean_nrmse",
             "std_r2",
             "std_nrmse",
             "rank_score",
         ]
     ].copy()
-    for col in ["mean_r2", "mean_nrmse", "mean_nmae", "std_r2", "std_nrmse", "rank_score"]:
+    for col in ["mean_r2", "mean_mae", "mean_rmse", "mean_nmae", "mean_nrmse", "std_r2", "std_nrmse", "rank_score"]:
         best_view[col] = best_view[col].round(4)
+
+    target_best_view = target_best[
+        [
+            "dataset",
+            "target",
+            "feature_set",
+            "model",
+            "r2",
+            "mae",
+            "rmse",
+            "nmae",
+            "nrmse",
+            "target_rank_score",
+        ]
+    ].copy()
+    for col in ["r2", "mae", "rmse", "nmae", "nrmse", "target_rank_score"]:
+        target_best_view[col] = target_best_view[col].round(4)
 
     comparison_view = comparison.copy()
     for col in comparison_view.select_dtypes(include="number").columns:
@@ -172,6 +200,8 @@ def write_markdown_summary(path: Path, best: pd.DataFrame, comparison: pd.DataFr
         "",
     ]
     lines.extend(_markdown_table(best_view))
+    lines.extend(["", "## 每个输出变量的最佳模型", ""])
+    lines.extend(_markdown_table(target_best_view.groupby("dataset").head(6)))
     lines.extend(["", "## 全特征与筛选特征对比", ""])
     lines.extend(_markdown_table(comparison_view))
     lines.extend(["", "## 数据规模、输入维度和输出维度影响", ""])
@@ -183,6 +213,7 @@ def write_markdown_summary(path: Path, best: pd.DataFrame, comparison: pd.DataFr
             "",
             "- `tables/model_metrics_all.csv`：所有数据集、特征集、模型的聚合指标和综合排名。",
             "- `tables/target_metrics_all.csv`：每个输出变量的 R2、MAE、RMSE、NMAE、NRMSE。",
+            "- `tables/best_models_by_target.csv`：每个输出变量的最佳模型和最佳特征集。",
             "- `tables/best_models_by_dataset.csv`：每个数据集和特征集下的最佳模型。",
             "- `tables/feature_set_comparison.csv`：全特征与筛选特征的最佳模型对比。",
             "- `tables/dataset_factor_analysis.csv`：样本规模、输入维度、输出维度与模型表现的汇总。",
