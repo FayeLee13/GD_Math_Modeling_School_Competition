@@ -1,0 +1,7 @@
+﻿dataset,feature_a,feature_b,abs_pearson_corr,is_high_redundancy
+rea,h_gap,gamma_frac,0.033193075892567765,False
+rea,rod_worth,gamma_frac,0.013970459261226097,False
+rea,rod_worth,beta,0.012723579870915156,False
+rea,rod_worth,h_gap,0.006825342599100617,False
+rea,beta,h_gap,0.0028501118989730863,False
+rea,beta,gamma_frac,0.0016133000668096425,False

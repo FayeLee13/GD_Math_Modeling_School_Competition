@@ -1,0 +1,16 @@
+﻿dataset,feature_a,feature_b,abs_pearson_corr,is_high_redundancy
+chf,G (kg m-2s-1),Xe (-),0.6185814998076784,False
+chf,P (kPa),Tin (C),0.6043480067704539,False
+chf,P (kPa),Xe (-),0.49178760553079026,False
+chf,G (kg m-2s-1),Tin (C),0.36482309179320865,False
+chf,L (m),P (kPa),0.32891626647116634,False
+chf,L (m),Tin (C),0.30427255548137755,False
+chf,Tin (C),Xe (-),0.27639753131975764,False
+chf,D (m),G (kg m-2s-1),0.2659007650777313,False
+chf,P (kPa),G (kg m-2s-1),0.20488634189483557,False
+chf,L (m),Xe (-),0.17253881091815093,False
+chf,D (m),L (m),0.1288021699354335,False
+chf,D (m),Xe (-),0.1019340946655669,False
+chf,D (m),P (kPa),0.07903741178762345,False
+chf,D (m),Tin (C),0.037195739527973976,False
+chf,L (m),G (kg m-2s-1),0.018692809723696347,False
