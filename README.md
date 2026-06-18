@@ -41,8 +41,8 @@ S = 0.3C + 0.3N + 0.3P - 0.1R
 ```
 
 where `C` is Pearson/Spearman correlation strength, `N` is normalized random
-forest feature importance, `P` is physics plausibility, and `R` is input
-redundancy.
+forest feature importance, `P` is the dataset-level physics plausibility score
+from `物理合理性评分表(1).md`, and `R` is input redundancy.
 
 ## Problem 2: Model Construction and Accuracy Evaluation
 

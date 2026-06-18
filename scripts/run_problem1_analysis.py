@@ -105,7 +105,7 @@ def write_markdown_summary(
         "",
         "- `C`：Pearson 与 Spearman 平均绝对相关强度。",
         "- `N`：随机森林非线性特征重要性，并按数据集内最大值归一化。",
-        "- `P`：基于题面机理的物理合理性评分。",
+        "- `P`：来自物理合理性评分表的数据集级物理合理性评分，并赋给该数据集下所有输入特征。",
         "- `R`：输入变量间平均绝对相关系数，作为冗余惩罚。",
         "",
         "特征分级规则：`S >= 0.65` 为核心特征，`0.45 <= S < 0.65` 为候选特征，`S < 0.45` 为低优先级特征。",
@@ -150,6 +150,8 @@ def write_markdown_summary(
             "physical_meaning",
             "physical_score",
             "relevance_level",
+            "formula_type",
+            "score_basis",
             "score_rationale",
         ]
     ].copy()

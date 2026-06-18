@@ -1,10 +1,10 @@
 ﻿dataset,feature,target,perturbation,mean_prediction_delta,normalized_mean_delta,response_direction,expected_direction,direction_consistent
-chf,L (m),CHF (kW m-2),minus_10pct,86.79341160428008,0.008977615184980886,1,1,True
-chf,L (m),CHF (kW m-2),plus_10pct,-114.53492581009336,-0.01184710302495641,-1,-1,True
-chf,Xe (-),CHF (kW m-2),minus_10pct,51.25930197943987,0.005302087788878284,1,1,True
-chf,Xe (-),CHF (kW m-2),plus_10pct,-44.00816458863621,-0.004552054808899751,-1,-1,True
-chf,G (kg m-2s-1),CHF (kW m-2),minus_10pct,-45.146970509444934,-0.004669849018603271,-1,-1,True
-chf,G (kg m-2s-1),CHF (kW m-2),plus_10pct,55.20959579893389,0.005710692740838449,1,1,True
+chf,L (m),CHF (kW m-2),minus_10pct,86.79341160428011,0.00897761518498089,1,1,True
+chf,L (m),CHF (kW m-2),plus_10pct,-114.53492581009333,-0.011847103024956408,-1,-1,True
+chf,Xe (-),CHF (kW m-2),minus_10pct,51.25930197943993,0.00530208778887829,1,1,True
+chf,Xe (-),CHF (kW m-2),plus_10pct,-44.00816458863623,-0.0045520548088997526,-1,-1,True
+chf,G (kg m-2s-1),CHF (kW m-2),minus_10pct,-45.1469705094449,-0.004669849018603268,-1,-1,True
+chf,G (kg m-2s-1),CHF (kW m-2),plus_10pct,55.209595798933925,0.005710692740838452,1,1,True
 heat,qprime,T,minus_10pct,-184.83040320809195,-0.3535229233745697,-1,-1,True
 heat,qprime,T,plus_10pct,183.72323384369068,0.3514052536428577,1,1,True
 heat,k,T,minus_10pct,-91.53277162141936,-0.1750736483096323,-1,1,False

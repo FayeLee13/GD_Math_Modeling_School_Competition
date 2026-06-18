@@ -4,7 +4,65 @@ from __future__ import annotations
 
 import pandas as pd
 
-from .dataset_config import DatasetSpec
+from .dataset_config import DATASET_PHYSICAL_SCORES, DatasetSpec
+
+
+DATASET_PHYSICAL_EVIDENCE: dict[str, dict[str, str]] = {
+    "chf": {
+        "evidence_source": "OECD/NEA CHF benchmark specification",
+        "mechanism_support": "Empirical CHF relation q''_CHF = f(P, G, x, D, L, Tin).",
+        "formula_type": "Type III: empirical or engineering relation",
+        "score_basis": "P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation.",
+    },
+    "heat": {
+        "evidence_source": "pyMAISE source paper and classical heat-conduction equations",
+        "mechanism_support": "Heat equation and centerline temperature rise relation, e.g. Tc - Ts = q''' R^2 / (4k).",
+        "formula_type": "Type I/II/III: governing equation, analytic relation, and engineering approximation",
+        "score_basis": "P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.",
+    },
+    "xs": {
+        "evidence_source": "Few-group cross-section sensitivity literature and standard reactor-physics formulas",
+        "mechanism_support": "Four-factor formula and two-group approximations connect fission, capture, and scattering cross sections to k.",
+        "formula_type": "Type I/II: standard formula and approximate reactor-physics model",
+        "score_basis": "P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.",
+    },
+    "fp": {
+        "evidence_source": "BISON Theory Manual and nuclear fuel performance model literature",
+        "mechanism_support": "Fuel heat conduction, gap heat transfer, thermo-mechanical coupling, and q''_gap = h_gap(T_fuel,s - T_clad,i).",
+        "formula_type": "Type I/II/III: standard model plus engineering approximations",
+        "score_basis": "P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",
+    },
+    "bwr": {
+        "evidence_source": "pyMAISE source paper and standard neutron diffusion theory",
+        "mechanism_support": "Neutron diffusion equation and local power relation P(r) proportional to Sigma_f(r) phi(r).",
+        "formula_type": "Type I/III: diffusion equation plus engineering peaking relations",
+        "score_basis": "P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",
+    },
+    "powery": {
+        "evidence_source": "NEORL source paper and standard neutron diffusion theory",
+        "mechanism_support": "Local power relation P_i proportional to integral Sigma_f(r) phi(r) dV over the region.",
+        "formula_type": "Type I/II: diffusion theory and spatial power integration",
+        "score_basis": "P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference.",
+    },
+    "rea": {
+        "evidence_source": "OECD/NEA LWR transient benchmark and point-kinetics theory",
+        "mechanism_support": "Point-kinetics equation plus fuel heat balance and gap heat-transfer relationships.",
+        "formula_type": "Type I/II: standard transient and heat-transfer equations",
+        "score_basis": "P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent.",
+    },
+    "htgr": {
+        "evidence_source": "Microreactor control-system optimization literature and Holos-Quad design report",
+        "mechanism_support": "Control drum angles affect local absorption distribution Sigma_a(theta) and therefore quadrant flux through diffusion physics.",
+        "formula_type": "Type I/II: diffusion theory and quadrant-flux relation",
+        "score_basis": "P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",
+    },
+    "microreactor": {
+        "evidence_source": "Microreactor control-system optimization literature and Holos-Quad design report",
+        "mechanism_support": "Control drum angles affect local absorption distribution Sigma_a(theta) and therefore quadrant flux through diffusion physics.",
+        "formula_type": "Type I/II: diffusion theory and quadrant-flux relation",
+        "score_basis": "P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",
+    },
+}
 
 
 FEATURE_MEANINGS: dict[str, dict[str, str]] = {
@@ -204,8 +262,9 @@ def build_physical_score_rationale(specs: list[DatasetSpec]) -> pd.DataFrame:
     rows: list[dict[str, object]] = []
     for spec in specs:
         scores = spec.physical_scores or {}
+        evidence = DATASET_PHYSICAL_EVIDENCE.get(spec.name, {})
         for feature in spec.input_columns:
-            score = float(scores.get(feature, 0.5))
+            score = float(scores.get(feature, DATASET_PHYSICAL_SCORES.get(spec.name, 0.5)))
             rows.append(
                 {
                     "dataset": spec.name,
@@ -213,6 +272,10 @@ def build_physical_score_rationale(specs: list[DatasetSpec]) -> pd.DataFrame:
                     "physical_meaning": feature_meaning(spec.name, feature),
                     "physical_score": score,
                     "relevance_level": _score_level(score),
+                    "evidence_source": evidence.get("evidence_source", ""),
+                    "mechanism_support": evidence.get("mechanism_support", ""),
+                    "formula_type": evidence.get("formula_type", ""),
+                    "score_basis": evidence.get("score_basis", ""),
                     "score_rationale": _score_rationale(score, spec.name, feature),
                 }
             )
@@ -223,6 +286,7 @@ def build_variable_physical_meaning(specs: list[DatasetSpec]) -> pd.DataFrame:
     rows: list[dict[str, object]] = []
     for spec in specs:
         scores = spec.physical_scores or {}
+        evidence = DATASET_PHYSICAL_EVIDENCE.get(spec.name, {})
         for feature in spec.input_columns:
             rows.append(
                 {
@@ -230,7 +294,8 @@ def build_variable_physical_meaning(specs: list[DatasetSpec]) -> pd.DataFrame:
                     "role": "input",
                     "variable": feature,
                     "physical_meaning": feature_meaning(spec.name, feature),
-                    "physical_score": float(scores.get(feature, 0.5)),
+                    "physical_score": float(scores.get(feature, DATASET_PHYSICAL_SCORES.get(spec.name, 0.5))),
+                    "score_basis": evidence.get("score_basis", ""),
                     "expected_direction_summary": _expected_direction_summary(spec.name, feature),
                 }
             )
@@ -242,6 +307,7 @@ def build_variable_physical_meaning(specs: list[DatasetSpec]) -> pd.DataFrame:
                     "variable": target,
                     "physical_meaning": target_meaning(spec.name, target),
                     "physical_score": "",
+                    "score_basis": "",
                     "expected_direction_summary": "model output",
                 }
             )
@@ -281,23 +347,17 @@ def target_meaning(dataset: str, target: str) -> str:
 
 def _score_level(score: float) -> str:
     if score >= 0.95:
-        return "direct_physics"
-    if score >= 0.75:
-        return "clear_operating_relevance"
-    if score >= 0.55:
-        return "secondary_physics"
-    return "weak_or_unspecified"
+        return "strong_formula_or_standard_model"
+    if score >= 0.45:
+        return "indirect_or_conditional_physics"
+    return "unsupported_or_contradictory"
 
 
 def _score_rationale(score: float, dataset: str, feature: str) -> str:
+    evidence = DATASET_PHYSICAL_EVIDENCE.get(dataset, {})
     meaning = feature_meaning(dataset, feature)
-    if score >= 0.95:
-        return f"{meaning}; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism."
-    if score >= 0.75:
-        return f"{meaning}; has clear operating or control relevance but is less directly mechanistic than primary state variables."
-    if score >= 0.55:
-        return f"{meaning}; treated as a secondary interface or boundary-condition effect."
-    return f"{meaning}; retained mainly when data evidence supports it because explicit physics relevance is limited."
+    score_basis = evidence.get("score_basis", "No dataset-level physics evidence is configured.")
+    return f"{meaning}; {score_basis}"
 
 
 def _expected_direction_summary(dataset: str, feature: str) -> str:

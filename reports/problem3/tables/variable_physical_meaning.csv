@@ -1,116 +1,116 @@
-﻿dataset,role,variable,physical_meaning,physical_score,expected_direction_summary
-chf,input,D (m),flow channel hydraulic diameter,1.0,CHF (kW m-2): negative
-chf,input,L (m),heated length of the channel,1.0,CHF (kW m-2): negative
-chf,input,P (kPa),system pressure,1.0,CHF (kW m-2): positive
-chf,input,G (kg m-2s-1),mass flux,1.0,CHF (kW m-2): positive
-chf,input,Tin (C),inlet coolant temperature,1.0,not_configured
-chf,input,Xe (-),exit quality,1.0,CHF (kW m-2): negative
-chf,output,CHF (kW m-2),critical heat flux,,model output
-heat,input,qprime,linear heat generation rate,1.0,T: positive
-heat,input,mdot,coolant mass flow rate,1.0,T: negative
-heat,input,Tin,inlet temperature,1.0,T: positive
-heat,input,R,fuel or heat-source radius,1.0,T: positive
-heat,input,L,heated length,1.0,T: positive
-heat,input,Cp,coolant heat capacity,1.0,T: negative
-heat,input,k,thermal conductivity,1.0,T: negative
-heat,output,T,temperature response,,model output
-xs,input,FissionFast,fast-group fission cross section,1.0,k: positive
-xs,input,CaptureFast,fast-group capture cross section,1.0,k: negative
-xs,input,FissionThermal,thermal-group fission cross section,1.0,k: positive
-xs,input,CaptureThermal,thermal-group capture cross section,1.0,k: negative
-xs,input,Scatter12,group-1 to group-2 scattering cross section,1.0,k: positive
-xs,input,Scatter11,within-group scattering cross section for group 1,1.0,not_configured
-xs,input,Scatter21,group-2 to group-1 scattering cross section,1.0,k: negative
-xs,input,Scatter22,within-group scattering cross section for group 2,1.0,not_configured
-xs,output,k,effective multiplication factor,,model output
-bwr,input,PSZ,BWR core operating or shape parameter from the problem data,0.8,not_configured
-bwr,input,DOM,BWR core operating or shape parameter from the problem data,0.8,not_configured
-bwr,input,vanA,BWR vaned-device or flow-distribution parameter A,0.8,not_configured
-bwr,input,vanB,BWR vaned-device or flow-distribution parameter B,0.8,not_configured
-bwr,input,subcool,coolant inlet subcooling,1.0,not_configured
-bwr,input,CRD,control rod drive or rod insertion state,1.0,not_configured
-bwr,input,flow_rate,core coolant flow rate,1.0,not_configured
-bwr,input,power_density,core power density,1.0,not_configured
-bwr,input,VFNGAP,void or gap-related core parameter from the problem data,1.0,not_configured
-bwr,output,K-eff,effective multiplication factor,,model output
-bwr,output,Max3Pin,maximum three-pin power indicator,,model output
-bwr,output,Max4Pin,maximum four-pin power indicator,,model output
-bwr,output,F-delta-H,axial enthalpy rise hot-channel factor,,model output
-bwr,output,Max-Fxy,maximum radial power peaking factor,,model output
-fp,input,fuel_dens,fuel density,1.0,not_configured
-fp,input,porosity,fuel porosity,1.0,not_configured
-fp,input,clad_thick,cladding thickness,1.0,not_configured
-fp,input,pellet_OD,fuel pellet outer diameter,1.0,not_configured
-fp,input,pellet_h,fuel pellet height,1.0,not_configured
-fp,input,gap_thick,fuel-cladding gap thickness,1.0,not_configured
-fp,input,inlet_T,coolant inlet temperature,1.0,not_configured
-fp,input,enrich,fuel enrichment,0.8,not_configured
-fp,input,rough_fuel,fuel surface roughness,0.6,not_configured
-fp,input,rough_clad,cladding surface roughness,0.6,not_configured
-fp,input,ax_pow,axial power factor or axial power level,1.0,not_configured
-fp,input,clad_T,cladding temperature,1.0,not_configured
-fp,input,pressure,system pressure,0.8,not_configured
-fp,output,fis_gas_produced,fission gas produced,,model output
-fp,output,max_fuel_centerline_temp,maximum fuel centerline temperature,,model output
-fp,output,max_fuel_surface_temp,maximum fuel surface temperature,,model output
-fp,output,radial_clad_dia,radial cladding diameter change,,model output
-rea,input,rod_worth,reactivity worth of the control rod,1.0,max_power: positive; burst_width: negative; max_Tf: positive; avg_Tcool: positive
-rea,input,beta,effective delayed neutron fraction,1.0,max_power: negative; burst_width: positive
-rea,input,h_gap,fuel-cladding gap heat-transfer coefficient,1.0,max_Tf: negative
-rea,input,gamma_frac,gamma heating fraction,1.0,avg_Tcool: positive
-rea,output,max_power,maximum power,,model output
-rea,output,burst_width,power burst width,,model output
-rea,output,max_Tf,maximum fuel temperature,,model output
-rea,output,avg_Tcool,average coolant temperature,,model output
-powery,input,CR1,control rod group 1 position or setting,1.0,not_configured
-powery,input,CR2,control rod group 2 position or setting,1.0,not_configured
-powery,input,CR3,control rod group 3 position or setting,1.0,not_configured
-powery,input,CR4,control rod group 4 position or setting,1.0,not_configured
-powery,input,CR5,control rod group 5 position or setting,1.0,not_configured
-powery,input,CR6,control rod group 6 position or setting,1.0,not_configured
-powery,output,A-2,local power response at position A-2,,model output
-powery,output,B-1,local power response at position B-1,,model output
-powery,output,B-2,local power response at position B-2,,model output
-powery,output,B-4,local power response at position B-4,,model output
-powery,output,B-5,local power response at position B-5,,model output
-powery,output,B-7,local power response at position B-7,,model output
-powery,output,B-8,local power response at position B-8,,model output
-powery,output,C-1,local power response at position C-1,,model output
-powery,output,C-2,local power response at position C-2,,model output
-powery,output,C-3,local power response at position C-3,,model output
-powery,output,C-4,local power response at position C-4,,model output
-powery,output,C-5,local power response at position C-5,,model output
-powery,output,C-6,local power response at position C-6,,model output
-powery,output,C-7,local power response at position C-7,,model output
-powery,output,C-8,local power response at position C-8,,model output
-powery,output,C-9,local power response at position C-9,,model output
-powery,output,C-10,local power response at position C-10,,model output
-powery,output,C-11,local power response at position C-11,,model output
-powery,output,C-12,local power response at position C-12,,model output
-powery,output,C-13,local power response at position C-13,,model output
-powery,output,C-14,local power response at position C-14,,model output
-powery,output,C-15,local power response at position C-15,,model output
-htgr,input,theta1,HTGR design or angular parameter 1,1.0,not_configured
-htgr,input,theta2,HTGR design or angular parameter 2,1.0,not_configured
-htgr,input,theta3,HTGR design or angular parameter 3,1.0,not_configured
-htgr,input,theta4,HTGR design or angular parameter 4,1.0,not_configured
-htgr,input,theta5,HTGR design or angular parameter 5,1.0,not_configured
-htgr,input,theta6,HTGR design or angular parameter 6,1.0,not_configured
-htgr,input,theta7,HTGR design or angular parameter 7,1.0,not_configured
-htgr,input,theta8,HTGR design or angular parameter 8,1.0,not_configured
-htgr,output,fluxQ1,neutron flux or power response in quadrant 1,,model output
-htgr,output,fluxQ2,neutron flux or power response in quadrant 2,,model output
-htgr,output,fluxQ3,neutron flux or power response in quadrant 3,,model output
-htgr,output,fluxQ4,neutron flux or power response in quadrant 4,,model output
-microreactor,input,theta1,microreactor design or angular parameter 1,1.0,not_configured
-microreactor,input,theta2,microreactor design or angular parameter 2,1.0,not_configured
-microreactor,input,theta3,microreactor design or angular parameter 3,1.0,not_configured
-microreactor,input,theta4,microreactor design or angular parameter 4,1.0,not_configured
-microreactor,input,theta5,microreactor design or angular parameter 5,1.0,not_configured
-microreactor,input,theta6,microreactor design or angular parameter 6,1.0,not_configured
-microreactor,input,theta7,microreactor design or angular parameter 7,1.0,not_configured
-microreactor,input,theta8,microreactor design or angular parameter 8,1.0,not_configured
-microreactor,output,fluxQ1,neutron flux or power response in quadrant 1,,model output
-microreactor,output,fluxQ2,neutron flux or power response in quadrant 2,,model output
-microreactor,output,fluxQ3,neutron flux or power response in quadrant 3,,model output
-microreactor,output,fluxQ4,neutron flux or power response in quadrant 4,,model output
+﻿dataset,role,variable,physical_meaning,physical_score,score_basis,expected_direction_summary
+chf,input,D (m),flow channel hydraulic diameter,0.5,"P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation.",CHF (kW m-2): negative
+chf,input,L (m),heated length of the channel,0.5,"P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation.",CHF (kW m-2): negative
+chf,input,P (kPa),system pressure,0.5,"P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation.",CHF (kW m-2): positive
+chf,input,G (kg m-2s-1),mass flux,0.5,"P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation.",CHF (kW m-2): positive
+chf,input,Tin (C),inlet coolant temperature,0.5,"P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation.",not_configured
+chf,input,Xe (-),exit quality,0.5,"P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation.",CHF (kW m-2): negative
+chf,output,CHF (kW m-2),critical heat flux,,,model output
+heat,input,qprime,linear heat generation rate,1.0,P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.,T: positive
+heat,input,mdot,coolant mass flow rate,1.0,P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.,T: negative
+heat,input,Tin,inlet temperature,1.0,P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.,T: positive
+heat,input,R,fuel or heat-source radius,1.0,P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.,T: positive
+heat,input,L,heated length,1.0,P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.,T: positive
+heat,input,Cp,coolant heat capacity,1.0,P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.,T: negative
+heat,input,k,thermal conductivity,1.0,P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations.,T: negative
+heat,output,T,temperature response,,,model output
+xs,input,FissionFast,fast-group fission cross section,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,k: positive
+xs,input,CaptureFast,fast-group capture cross section,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,k: negative
+xs,input,FissionThermal,thermal-group fission cross section,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,k: positive
+xs,input,CaptureThermal,thermal-group capture cross section,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,k: negative
+xs,input,Scatter12,group-1 to group-2 scattering cross section,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,k: positive
+xs,input,Scatter11,within-group scattering cross section for group 1,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,not_configured
+xs,input,Scatter21,group-2 to group-1 scattering cross section,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,k: negative
+xs,input,Scatter22,within-group scattering cross section for group 2,1.0,P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections.,not_configured
+xs,output,k,effective multiplication factor,,,model output
+bwr,input,PSZ,BWR core operating or shape parameter from the problem data,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,DOM,BWR core operating or shape parameter from the problem data,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,vanA,BWR vaned-device or flow-distribution parameter A,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,vanB,BWR vaned-device or flow-distribution parameter B,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,subcool,coolant inlet subcooling,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,CRD,control rod drive or rod insertion state,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,flow_rate,core coolant flow rate,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,power_density,core power density,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,input,VFNGAP,void or gap-related core parameter from the problem data,0.5,"P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors.",not_configured
+bwr,output,K-eff,effective multiplication factor,,,model output
+bwr,output,Max3Pin,maximum three-pin power indicator,,,model output
+bwr,output,Max4Pin,maximum four-pin power indicator,,,model output
+bwr,output,F-delta-H,axial enthalpy rise hot-channel factor,,,model output
+bwr,output,Max-Fxy,maximum radial power peaking factor,,,model output
+fp,input,fuel_dens,fuel density,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,porosity,fuel porosity,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,clad_thick,cladding thickness,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,pellet_OD,fuel pellet outer diameter,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,pellet_h,fuel pellet height,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,gap_thick,fuel-cladding gap thickness,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,inlet_T,coolant inlet temperature,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,enrich,fuel enrichment,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,rough_fuel,fuel surface roughness,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,rough_clad,cladding surface roughness,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,ax_pow,axial power factor or axial power level,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,clad_T,cladding temperature,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,input,pressure,system pressure,0.5,"P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable.",not_configured
+fp,output,fis_gas_produced,fission gas produced,,,model output
+fp,output,max_fuel_centerline_temp,maximum fuel centerline temperature,,,model output
+fp,output,max_fuel_surface_temp,maximum fuel surface temperature,,,model output
+fp,output,radial_clad_dia,radial cladding diameter change,,,model output
+rea,input,rod_worth,reactivity worth of the control rod,0.5,"P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent.",max_power: positive; burst_width: negative; max_Tf: positive; avg_Tcool: positive
+rea,input,beta,effective delayed neutron fraction,0.5,"P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent.",max_power: negative; burst_width: positive
+rea,input,h_gap,fuel-cladding gap heat-transfer coefficient,0.5,"P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent.",max_Tf: negative
+rea,input,gamma_frac,gamma heating fraction,0.5,"P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent.",avg_Tcool: positive
+rea,output,max_power,maximum power,,,model output
+rea,output,burst_width,power burst width,,,model output
+rea,output,max_Tf,maximum fuel temperature,,,model output
+rea,output,avg_Tcool,average coolant temperature,,,model output
+powery,input,CR1,control rod group 1 position or setting,0.5,"P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference.",not_configured
+powery,input,CR2,control rod group 2 position or setting,0.5,"P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference.",not_configured
+powery,input,CR3,control rod group 3 position or setting,0.5,"P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference.",not_configured
+powery,input,CR4,control rod group 4 position or setting,0.5,"P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference.",not_configured
+powery,input,CR5,control rod group 5 position or setting,0.5,"P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference.",not_configured
+powery,input,CR6,control rod group 6 position or setting,0.5,"P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference.",not_configured
+powery,output,A-2,local power response at position A-2,,,model output
+powery,output,B-1,local power response at position B-1,,,model output
+powery,output,B-2,local power response at position B-2,,,model output
+powery,output,B-4,local power response at position B-4,,,model output
+powery,output,B-5,local power response at position B-5,,,model output
+powery,output,B-7,local power response at position B-7,,,model output
+powery,output,B-8,local power response at position B-8,,,model output
+powery,output,C-1,local power response at position C-1,,,model output
+powery,output,C-2,local power response at position C-2,,,model output
+powery,output,C-3,local power response at position C-3,,,model output
+powery,output,C-4,local power response at position C-4,,,model output
+powery,output,C-5,local power response at position C-5,,,model output
+powery,output,C-6,local power response at position C-6,,,model output
+powery,output,C-7,local power response at position C-7,,,model output
+powery,output,C-8,local power response at position C-8,,,model output
+powery,output,C-9,local power response at position C-9,,,model output
+powery,output,C-10,local power response at position C-10,,,model output
+powery,output,C-11,local power response at position C-11,,,model output
+powery,output,C-12,local power response at position C-12,,,model output
+powery,output,C-13,local power response at position C-13,,,model output
+powery,output,C-14,local power response at position C-14,,,model output
+powery,output,C-15,local power response at position C-15,,,model output
+htgr,input,theta1,HTGR design or angular parameter 1,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,input,theta2,HTGR design or angular parameter 2,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,input,theta3,HTGR design or angular parameter 3,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,input,theta4,HTGR design or angular parameter 4,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,input,theta5,HTGR design or angular parameter 5,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,input,theta6,HTGR design or angular parameter 6,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,input,theta7,HTGR design or angular parameter 7,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,input,theta8,HTGR design or angular parameter 8,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+htgr,output,fluxQ1,neutron flux or power response in quadrant 1,,,model output
+htgr,output,fluxQ2,neutron flux or power response in quadrant 2,,,model output
+htgr,output,fluxQ3,neutron flux or power response in quadrant 3,,,model output
+htgr,output,fluxQ4,neutron flux or power response in quadrant 4,,,model output
+microreactor,input,theta1,microreactor design or angular parameter 1,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,input,theta2,microreactor design or angular parameter 2,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,input,theta3,microreactor design or angular parameter 3,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,input,theta4,microreactor design or angular parameter 4,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,input,theta5,microreactor design or angular parameter 5,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,input,theta6,microreactor design or angular parameter 6,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,input,theta7,microreactor design or angular parameter 7,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,input,theta8,microreactor design or angular parameter 8,0.5,"P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent.",not_configured
+microreactor,output,fluxQ1,neutron flux or power response in quadrant 1,,,model output
+microreactor,output,fluxQ2,neutron flux or power response in quadrant 2,,,model output
+microreactor,output,fluxQ3,neutron flux or power response in quadrant 3,,,model output
+microreactor,output,fluxQ4,neutron flux or power response in quadrant 4,,,model output

@@ -8,7 +8,7 @@
 
 - `C`：Pearson 与 Spearman 平均绝对相关强度。
 - `N`：随机森林非线性特征重要性，并按数据集内最大值归一化。
-- `P`：基于题面机理的物理合理性评分。
+- `P`：来自物理合理性评分表的数据集级物理合理性评分，并赋给该数据集下所有输入特征。
 - `R`：输入变量间平均绝对相关系数，作为冗余惩罚。
 
 特征分级规则：`S >= 0.65` 为核心特征，`0.45 <= S < 0.65` 为候选特征，`S < 0.45` 为低优先级特征。
@@ -79,56 +79,56 @@
 
 ## 物理合理性评分依据示例
 
-| dataset | feature | physical_meaning | physical_score | relevance_level | score_rationale |
-| --- | --- | --- | --- | --- | --- |
-| chf | D (m) | flow channel hydraulic diameter | 1.0 | direct_physics | flow channel hydraulic diameter; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| chf | L (m) | heated length of the channel | 1.0 | direct_physics | heated length of the channel; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| chf | P (kPa) | system pressure | 1.0 | direct_physics | system pressure; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| chf | G (kg m-2s-1) | mass flux | 1.0 | direct_physics | mass flux; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| heat | qprime | linear heat generation rate | 1.0 | direct_physics | linear heat generation rate; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| heat | mdot | coolant mass flow rate | 1.0 | direct_physics | coolant mass flow rate; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| heat | Tin | inlet temperature | 1.0 | direct_physics | inlet temperature; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| heat | R | fuel or heat-source radius | 1.0 | direct_physics | fuel or heat-source radius; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| xs | FissionFast | fast-group fission cross section | 1.0 | direct_physics | fast-group fission cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| xs | CaptureFast | fast-group capture cross section | 1.0 | direct_physics | fast-group capture cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| xs | FissionThermal | thermal-group fission cross section | 1.0 | direct_physics | thermal-group fission cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| xs | CaptureThermal | thermal-group capture cross section | 1.0 | direct_physics | thermal-group capture cross section; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| bwr | PSZ | BWR core operating or shape parameter from the problem data | 0.8 | clear_operating_relevance | BWR core operating or shape parameter from the problem data; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
-| bwr | DOM | BWR core operating or shape parameter from the problem data | 0.8 | clear_operating_relevance | BWR core operating or shape parameter from the problem data; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
-| bwr | vanA | BWR vaned-device or flow-distribution parameter A | 0.8 | clear_operating_relevance | BWR vaned-device or flow-distribution parameter A; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
-| bwr | vanB | BWR vaned-device or flow-distribution parameter B | 0.8 | clear_operating_relevance | BWR vaned-device or flow-distribution parameter B; has clear operating or control relevance but is less directly mechanistic than primary state variables. |
-| fp | fuel_dens | fuel density | 1.0 | direct_physics | fuel density; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| fp | porosity | fuel porosity | 1.0 | direct_physics | fuel porosity; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| fp | clad_thick | cladding thickness | 1.0 | direct_physics | cladding thickness; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| fp | pellet_OD | fuel pellet outer diameter | 1.0 | direct_physics | fuel pellet outer diameter; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| rea | rod_worth | reactivity worth of the control rod | 1.0 | direct_physics | reactivity worth of the control rod; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| rea | beta | effective delayed neutron fraction | 1.0 | direct_physics | effective delayed neutron fraction; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| rea | h_gap | fuel-cladding gap heat-transfer coefficient | 1.0 | direct_physics | fuel-cladding gap heat-transfer coefficient; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| rea | gamma_frac | gamma heating fraction | 1.0 | direct_physics | gamma heating fraction; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| powery | CR1 | control rod group 1 position or setting | 1.0 | direct_physics | control rod group 1 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| powery | CR2 | control rod group 2 position or setting | 1.0 | direct_physics | control rod group 2 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| powery | CR3 | control rod group 3 position or setting | 1.0 | direct_physics | control rod group 3 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| powery | CR4 | control rod group 4 position or setting | 1.0 | direct_physics | control rod group 4 position or setting; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| htgr | theta1 | HTGR design or angular parameter 1 | 1.0 | direct_physics | HTGR design or angular parameter 1; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| htgr | theta2 | HTGR design or angular parameter 2 | 1.0 | direct_physics | HTGR design or angular parameter 2; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| htgr | theta3 | HTGR design or angular parameter 3 | 1.0 | direct_physics | HTGR design or angular parameter 3; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| htgr | theta4 | HTGR design or angular parameter 4 | 1.0 | direct_physics | HTGR design or angular parameter 4; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| microreactor | theta1 | microreactor design or angular parameter 1 | 1.0 | direct_physics | microreactor design or angular parameter 1; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| microreactor | theta2 | microreactor design or angular parameter 2 | 1.0 | direct_physics | microreactor design or angular parameter 2; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| microreactor | theta3 | microreactor design or angular parameter 3 | 1.0 | direct_physics | microreactor design or angular parameter 3; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
-| microreactor | theta4 | microreactor design or angular parameter 4 | 1.0 | direct_physics | microreactor design or angular parameter 4; directly tied to the governing heat-transfer, neutronics, or fuel-behavior mechanism. |
+| dataset | feature | physical_meaning | physical_score | relevance_level | formula_type | score_basis | score_rationale |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| chf | D (m) | flow channel hydraulic diameter | 0.5 | indirect_or_conditional_physics | Type III: empirical or engineering relation | P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. | flow channel hydraulic diameter; P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. |
+| chf | L (m) | heated length of the channel | 0.5 | indirect_or_conditional_physics | Type III: empirical or engineering relation | P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. | heated length of the channel; P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. |
+| chf | P (kPa) | system pressure | 0.5 | indirect_or_conditional_physics | Type III: empirical or engineering relation | P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. | system pressure; P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. |
+| chf | G (kg m-2s-1) | mass flux | 0.5 | indirect_or_conditional_physics | Type III: empirical or engineering relation | P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. | mass flux; P=0.5 because the variables have accepted thermal-hydraulic relevance, but the support is mainly empirical rather than a closed-form first-principles equation. |
+| heat | qprime | linear heat generation rate | 1.0 | strong_formula_or_standard_model | Type I/II/III: governing equation, analytic relation, and engineering approximation | P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. | linear heat generation rate; P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. |
+| heat | mdot | coolant mass flow rate | 1.0 | strong_formula_or_standard_model | Type I/II/III: governing equation, analytic relation, and engineering approximation | P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. | coolant mass flow rate; P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. |
+| heat | Tin | inlet temperature | 1.0 | strong_formula_or_standard_model | Type I/II/III: governing equation, analytic relation, and engineering approximation | P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. | inlet temperature; P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. |
+| heat | R | fuel or heat-source radius | 1.0 | strong_formula_or_standard_model | Type I/II/III: governing equation, analytic relation, and engineering approximation | P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. | fuel or heat-source radius; P=1.0 because the dataset variables are directly supported by standard heat-transfer equations and analytic temperature-rise relations. |
+| xs | FissionFast | fast-group fission cross section | 1.0 | strong_formula_or_standard_model | Type I/II: standard formula and approximate reactor-physics model | P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. | fast-group fission cross section; P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. |
+| xs | CaptureFast | fast-group capture cross section | 1.0 | strong_formula_or_standard_model | Type I/II: standard formula and approximate reactor-physics model | P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. | fast-group capture cross section; P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. |
+| xs | FissionThermal | thermal-group fission cross section | 1.0 | strong_formula_or_standard_model | Type I/II: standard formula and approximate reactor-physics model | P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. | thermal-group fission cross section; P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. |
+| xs | CaptureThermal | thermal-group capture cross section | 1.0 | strong_formula_or_standard_model | Type I/II: standard formula and approximate reactor-physics model | P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. | thermal-group capture cross section; P=1.0 because neutron production and loss mechanisms are explicit and strongly tied to the input cross sections. |
+| bwr | PSZ | BWR core operating or shape parameter from the problem data | 0.5 | indirect_or_conditional_physics | Type I/III: diffusion equation plus engineering peaking relations | P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. | BWR core operating or shape parameter from the problem data; P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. |
+| bwr | DOM | BWR core operating or shape parameter from the problem data | 0.5 | indirect_or_conditional_physics | Type I/III: diffusion equation plus engineering peaking relations | P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. | BWR core operating or shape parameter from the problem data; P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. |
+| bwr | vanA | BWR vaned-device or flow-distribution parameter A | 0.5 | indirect_or_conditional_physics | Type I/III: diffusion equation plus engineering peaking relations | P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. | BWR vaned-device or flow-distribution parameter A; P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. |
+| bwr | vanB | BWR vaned-device or flow-distribution parameter B | 0.5 | indirect_or_conditional_physics | Type I/III: diffusion equation plus engineering peaking relations | P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. | BWR vaned-device or flow-distribution parameter B; P=0.5 because control and operating variables are physically meaningful, but their dataset-level effect is mediated by reactor-core simulation and engineering response factors. |
+| fp | fuel_dens | fuel density | 0.5 | indirect_or_conditional_physics | Type I/II/III: standard model plus engineering approximations | P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. | fuel density; P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. |
+| fp | porosity | fuel porosity | 0.5 | indirect_or_conditional_physics | Type I/II/III: standard model plus engineering approximations | P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. | fuel porosity; P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. |
+| fp | clad_thick | cladding thickness | 0.5 | indirect_or_conditional_physics | Type I/II/III: standard model plus engineering approximations | P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. | cladding thickness; P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. |
+| fp | pellet_OD | fuel pellet outer diameter | 0.5 | indirect_or_conditional_physics | Type I/II/III: standard model plus engineering approximations | P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. | fuel pellet outer diameter; P=0.5 because the physical mechanism is clear, but several relationships are engineering-model or approximate rather than direct closed-form effects for every variable. |
+| rea | rod_worth | reactivity worth of the control rod | 0.5 | indirect_or_conditional_physics | Type I/II: standard transient and heat-transfer equations | P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. | reactivity worth of the control rod; P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. |
+| rea | beta | effective delayed neutron fraction | 0.5 | indirect_or_conditional_physics | Type I/II: standard transient and heat-transfer equations | P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. | effective delayed neutron fraction; P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. |
+| rea | h_gap | fuel-cladding gap heat-transfer coefficient | 0.5 | indirect_or_conditional_physics | Type I/II: standard transient and heat-transfer equations | P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. | fuel-cladding gap heat-transfer coefficient; P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. |
+| rea | gamma_frac | gamma heating fraction | 0.5 | indirect_or_conditional_physics | Type I/II: standard transient and heat-transfer equations | P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. | gamma heating fraction; P=0.5 because the main variables have clear transient-physics meaning, but the dataset response is coupled and condition-dependent. |
+| powery | CR1 | control rod group 1 position or setting | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and spatial power integration | P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. | control rod group 1 position or setting; P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. |
+| powery | CR2 | control rod group 2 position or setting | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and spatial power integration | P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. | control rod group 2 position or setting; P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. |
+| powery | CR3 | control rod group 3 position or setting | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and spatial power integration | P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. | control rod group 3 position or setting; P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. |
+| powery | CR4 | control rod group 4 position or setting | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and spatial power integration | P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. | control rod group 4 position or setting; P=0.5 because control rod settings have a clear spatial-power mechanism, but exact local effects require further simulation-dependent inference. |
+| htgr | theta1 | HTGR design or angular parameter 1 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | HTGR design or angular parameter 1; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
+| htgr | theta2 | HTGR design or angular parameter 2 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | HTGR design or angular parameter 2; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
+| htgr | theta3 | HTGR design or angular parameter 3 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | HTGR design or angular parameter 3; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
+| htgr | theta4 | HTGR design or angular parameter 4 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | HTGR design or angular parameter 4; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
+| microreactor | theta1 | microreactor design or angular parameter 1 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | microreactor design or angular parameter 1; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
+| microreactor | theta2 | microreactor design or angular parameter 2 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | microreactor design or angular parameter 2; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
+| microreactor | theta3 | microreactor design or angular parameter 3 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | microreactor design or angular parameter 3; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
+| microreactor | theta4 | microreactor design or angular parameter 4 | 0.5 | indirect_or_conditional_physics | Type I/II: diffusion theory and quadrant-flux relation | P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. | microreactor design or angular parameter 4; P=0.5 because the theta variables have a plausible control-drum mechanism, but the detailed quadrant response is geometry- and simulation-dependent. |
 
 ## 各数据集推荐特征
 
 | dataset | selected_features |
 | --- | --- |
 | bwr | CRD |
-| chf | L (m), Xe (-), G (kg m-2s-1), P (kPa) |
-| fp | ax_pow, clad_T, porosity |
+| chf | L (m), Xe (-) |
+| fp | ax_pow |
 | heat | qprime |
-| htgr | theta1, theta8, theta5, theta4, theta2, theta3, theta7, theta6 |
-| microreactor | theta6, theta4, theta7, theta3, theta1, theta5, theta2, theta8 |
-| powery | CR4, CR3, CR2, CR5, CR1, CR6 |
+| htgr | theta1, theta8, theta5 |
+| microreactor | theta6, theta4 |
+| powery | CR4, CR3, CR2, CR5, CR1 |
 | rea | rod_worth, beta |
 | xs | FissionThermal, CaptureFast, FissionFast, CaptureThermal |
 
@@ -136,45 +136,45 @@
 
 | dataset | rank | feature | dp_fsm_score | feature_level | correlation_strength | rf_importance_norm | redundancy_max_abs | possible_nonlinear_relation |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| bwr | 1 | CRD | 0.842 | core | 0.8136 | 1.0 | 0.042 | False |
-| bwr | 2 | power_density | 0.3093 | low_priority | 0.024 | 0.0176 | 0.053 | False |
-| bwr | 3 | subcool | 0.308 | low_priority | 0.017 | 0.0172 | 0.053 | False |
-| bwr | 4 | flow_rate | 0.3069 | low_priority | 0.0141 | 0.0161 | 0.0419 | False |
-| bwr | 5 | VFNGAP | 0.3052 | low_priority | 0.0067 | 0.0141 | 0.0166 | False |
-| chf | 1 | L (m) | 0.7691 | core | 0.6272 | 1.0 | 0.3289 | False |
-| chf | 2 | Xe (-) | 0.6665 | core | 0.5314 | 0.801 | 0.6186 | False |
-| chf | 3 | G (kg m-2s-1) | 0.4956 | candidate | 0.3904 | 0.3599 | 0.6186 | False |
-| chf | 4 | P (kPa) | 0.4423 | low_priority | 0.2663 | 0.3218 | 0.6043 | False |
-| chf | 5 | Tin (C) | 0.4349 | low_priority | 0.3149 | 0.2407 | 0.6043 | False |
-| fp | 1 | ax_pow | 0.76 | core | 0.5445 | 1.0 | 0.0854 | False |
-| fp | 2 | clad_T | 0.5199 | candidate | 0.4242 | 0.3261 | 0.1432 | False |
-| fp | 3 | porosity | 0.5091 | candidate | 0.2236 | 0.4841 | 0.0789 | False |
-| fp | 4 | pellet_h | 0.4073 | low_priority | 0.2922 | 0.0802 | 0.0914 | False |
-| fp | 5 | inlet_T | 0.3421 | low_priority | 0.0787 | 0.0751 | 0.1126 | False |
+| bwr | 1 | CRD | 0.692 | core | 0.8136 | 1.0 | 0.042 | False |
+| bwr | 2 | DOM | 0.1653 | low_priority | 0.0835 | 0.0155 | 1.0 | False |
+| bwr | 3 | PSZ | 0.1651 | low_priority | 0.0835 | 0.0148 | 1.0 | False |
+| bwr | 4 | power_density | 0.1593 | low_priority | 0.024 | 0.0176 | 0.053 | False |
+| bwr | 5 | subcool | 0.158 | low_priority | 0.017 | 0.0172 | 0.053 | False |
+| chf | 1 | L (m) | 0.6191 | candidate | 0.6272 | 1.0 | 0.3289 | False |
+| chf | 2 | Xe (-) | 0.5165 | candidate | 0.5314 | 0.801 | 0.6186 | False |
+| chf | 3 | G (kg m-2s-1) | 0.3456 | low_priority | 0.3904 | 0.3599 | 0.6186 | False |
+| chf | 4 | P (kPa) | 0.2923 | low_priority | 0.2663 | 0.3218 | 0.6043 | False |
+| chf | 5 | Tin (C) | 0.2849 | low_priority | 0.3149 | 0.2407 | 0.6043 | False |
+| fp | 1 | ax_pow | 0.61 | candidate | 0.5445 | 1.0 | 0.0854 | False |
+| fp | 2 | clad_T | 0.3699 | low_priority | 0.4242 | 0.3261 | 0.1432 | False |
+| fp | 3 | porosity | 0.3591 | low_priority | 0.2236 | 0.4841 | 0.0789 | False |
+| fp | 4 | pellet_h | 0.2573 | low_priority | 0.2922 | 0.0802 | 0.0914 | False |
+| fp | 5 | rough_fuel | 0.2512 | low_priority | 0.2116 | 0.1374 | 0.0868 | False |
 | heat | 1 | qprime | 0.8593 | core | 0.8729 | 1.0 | 0.074 | False |
 | heat | 2 | k | 0.4319 | low_priority | 0.3445 | 0.1009 | 0.0352 | False |
 | heat | 3 | L | 0.329 | low_priority | 0.0767 | 0.0278 | 0.033 | False |
 | heat | 4 | mdot | 0.3252 | low_priority | 0.0666 | 0.0221 | 0.0323 | False |
 | heat | 5 | Tin | 0.3212 | low_priority | 0.0619 | 0.0191 | 0.074 | False |
-| htgr | 1 | theta1 | 0.6063 | candidate | 0.03 | 1.0 | 0.0468 | True |
-| htgr | 2 | theta8 | 0.6017 | candidate | 0.03 | 0.9846 | 0.0468 | True |
-| htgr | 3 | theta5 | 0.6017 | candidate | 0.03 | 0.9845 | 0.0468 | True |
-| htgr | 4 | theta4 | 0.5988 | candidate | 0.03 | 0.9748 | 0.0468 | True |
-| htgr | 5 | theta2 | 0.5475 | candidate | 0.0138 | 0.8205 | 0.0468 | True |
-| microreactor | 1 | theta6 | 0.6582 | core | 0.2002 | 1.0 | 0.0376 | True |
-| microreactor | 2 | theta4 | 0.6193 | candidate | 0.1227 | 0.9482 | 0.0574 | True |
-| microreactor | 3 | theta7 | 0.5999 | candidate | 0.1821 | 0.8267 | 0.0705 | True |
-| microreactor | 4 | theta3 | 0.5919 | candidate | 0.1494 | 0.8345 | 0.0894 | True |
-| microreactor | 5 | theta1 | 0.5616 | candidate | 0.1148 | 0.7671 | 0.0703 | True |
-| powery | 1 | CR4 | 0.6966 | core | 0.3319 | 1.0 | 0.0662 | False |
-| powery | 2 | CR3 | 0.6898 | core | 0.3413 | 0.9669 | 0.053 | False |
-| powery | 3 | CR2 | 0.6854 | core | 0.3323 | 0.9628 | 0.0662 | False |
-| powery | 4 | CR5 | 0.6476 | candidate | 0.3219 | 0.8431 | 0.0468 | False |
-| powery | 5 | CR1 | 0.6449 | candidate | 0.3161 | 0.8423 | 0.053 | False |
-| rea | 1 | rod_worth | 0.8198 | core | 0.7364 | 1.0 | 0.014 | False |
-| rea | 2 | beta | 0.7286 | core | 0.5846 | 0.8459 | 0.0127 | False |
-| rea | 3 | h_gap | 0.324 | low_priority | 0.0601 | 0.0247 | 0.0332 | False |
-| rea | 4 | gamma_frac | 0.3125 | low_priority | 0.0182 | 0.0288 | 0.0332 | False |
+| htgr | 1 | theta1 | 0.4563 | candidate | 0.03 | 1.0 | 0.0468 | True |
+| htgr | 2 | theta8 | 0.4517 | candidate | 0.03 | 0.9846 | 0.0468 | True |
+| htgr | 3 | theta5 | 0.4517 | candidate | 0.03 | 0.9845 | 0.0468 | True |
+| htgr | 4 | theta4 | 0.4488 | low_priority | 0.03 | 0.9748 | 0.0468 | True |
+| htgr | 5 | theta2 | 0.3975 | low_priority | 0.0138 | 0.8205 | 0.0468 | True |
+| microreactor | 1 | theta6 | 0.5082 | candidate | 0.2002 | 1.0 | 0.0376 | True |
+| microreactor | 2 | theta4 | 0.4693 | candidate | 0.1227 | 0.9482 | 0.0574 | True |
+| microreactor | 3 | theta7 | 0.4499 | low_priority | 0.1821 | 0.8267 | 0.0705 | True |
+| microreactor | 4 | theta3 | 0.4419 | low_priority | 0.1494 | 0.8345 | 0.0894 | True |
+| microreactor | 5 | theta1 | 0.4116 | low_priority | 0.1148 | 0.7671 | 0.0703 | True |
+| powery | 1 | CR4 | 0.5466 | candidate | 0.3319 | 1.0 | 0.0662 | False |
+| powery | 2 | CR3 | 0.5398 | candidate | 0.3413 | 0.9669 | 0.053 | False |
+| powery | 3 | CR2 | 0.5354 | candidate | 0.3323 | 0.9628 | 0.0662 | False |
+| powery | 4 | CR5 | 0.4976 | candidate | 0.3219 | 0.8431 | 0.0468 | False |
+| powery | 5 | CR1 | 0.4949 | candidate | 0.3161 | 0.8423 | 0.053 | False |
+| rea | 1 | rod_worth | 0.6698 | core | 0.7364 | 1.0 | 0.014 | False |
+| rea | 2 | beta | 0.5786 | candidate | 0.5846 | 0.8459 | 0.0127 | False |
+| rea | 3 | h_gap | 0.174 | low_priority | 0.0601 | 0.0247 | 0.0332 | False |
+| rea | 4 | gamma_frac | 0.1625 | low_priority | 0.0182 | 0.0288 | 0.0332 | False |
 | xs | 1 | FissionThermal | 0.7922 | core | 0.6783 | 1.0 | 0.2321 | False |
 | xs | 2 | CaptureFast | 0.5705 | candidate | 0.5375 | 0.4894 | 0.7651 | False |
 | xs | 3 | FissionFast | 0.5645 | candidate | 0.5565 | 0.4264 | 0.6708 | False |

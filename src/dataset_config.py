@@ -23,6 +23,23 @@ def _score(columns: list[str], value: float = 1.0) -> dict[str, float]:
     return {col: value for col in columns}
 
 
+DATASET_PHYSICAL_SCORES: dict[str, float] = {
+    "chf": 0.5,
+    "heat": 1.0,
+    "xs": 1.0,
+    "fp": 0.5,
+    "bwr": 0.5,
+    "powery": 0.5,
+    "rea": 0.5,
+    "htgr": 0.5,
+    "microreactor": 0.5,
+}
+
+
+def _dataset_score(dataset: str, columns: list[str]) -> dict[str, float]:
+    return _score(columns, DATASET_PHYSICAL_SCORES[dataset])
+
+
 DATASET_SPECS: list[DatasetSpec] = [
     DatasetSpec(
         name="chf",
@@ -30,7 +47,7 @@ DATASET_SPECS: list[DatasetSpec] = [
         output_file=None,
         input_columns=["D (m)", "L (m)", "P (kPa)", "G (kg m-2s-1)", "Tin (C)", "Xe (-)"],
         output_columns=["CHF (kW m-2)"],
-        physical_scores=_score(["D (m)", "L (m)", "P (kPa)", "G (kg m-2s-1)", "Tin (C)", "Xe (-)"]),
+        physical_scores=_dataset_score("chf", ["D (m)", "L (m)", "P (kPa)", "G (kg m-2s-1)", "Tin (C)", "Xe (-)"]),
     ),
     DatasetSpec(
         name="heat",
@@ -38,7 +55,7 @@ DATASET_SPECS: list[DatasetSpec] = [
         output_file=None,
         input_columns=["qprime", "mdot", "Tin", "R", "L", "Cp", "k"],
         output_columns=["T"],
-        physical_scores=_score(["qprime", "mdot", "Tin", "R", "L", "Cp", "k"]),
+        physical_scores=_dataset_score("heat", ["qprime", "mdot", "Tin", "R", "L", "Cp", "k"]),
     ),
     DatasetSpec(
         name="xs",
@@ -55,7 +72,8 @@ DATASET_SPECS: list[DatasetSpec] = [
             "Scatter22",
         ],
         output_columns=["k"],
-        physical_scores=_score(
+        physical_scores=_dataset_score(
+            "xs",
             [
                 "FissionFast",
                 "CaptureFast",
@@ -84,17 +102,10 @@ DATASET_SPECS: list[DatasetSpec] = [
             "VFNGAP",
         ],
         output_columns=["K-eff", "Max3Pin", "Max4Pin", "F-delta-H", "Max-Fxy"],
-        physical_scores={
-            "PSZ": 0.8,
-            "DOM": 0.8,
-            "vanA": 0.8,
-            "vanB": 0.8,
-            "subcool": 1.0,
-            "CRD": 1.0,
-            "flow_rate": 1.0,
-            "power_density": 1.0,
-            "VFNGAP": 1.0,
-        },
+        physical_scores=_dataset_score(
+            "bwr",
+            ["PSZ", "DOM", "vanA", "vanB", "subcool", "CRD", "flow_rate", "power_density", "VFNGAP"],
+        ),
     ),
     DatasetSpec(
         name="fp",
@@ -121,21 +132,24 @@ DATASET_SPECS: list[DatasetSpec] = [
             "max_fuel_surface_temp",
             "radial_clad_dia",
         ],
-        physical_scores={
-            "fuel_dens": 1.0,
-            "porosity": 1.0,
-            "clad_thick": 1.0,
-            "pellet_OD": 1.0,
-            "pellet_h": 1.0,
-            "gap_thick": 1.0,
-            "inlet_T": 1.0,
-            "enrich": 0.8,
-            "rough_fuel": 0.6,
-            "rough_clad": 0.6,
-            "ax_pow": 1.0,
-            "clad_T": 1.0,
-            "pressure": 0.8,
-        },
+        physical_scores=_dataset_score(
+            "fp",
+            [
+                "fuel_dens",
+                "porosity",
+                "clad_thick",
+                "pellet_OD",
+                "pellet_h",
+                "gap_thick",
+                "inlet_T",
+                "enrich",
+                "rough_fuel",
+                "rough_clad",
+                "ax_pow",
+                "clad_T",
+                "pressure",
+            ],
+        ),
     ),
     DatasetSpec(
         name="rea",
@@ -143,7 +157,7 @@ DATASET_SPECS: list[DatasetSpec] = [
         output_file="rea_outputs.csv",
         input_columns=["rod_worth", "beta", "h_gap", "gamma_frac"],
         output_columns=["max_power", "burst_width", "max_Tf", "avg_Tcool"],
-        physical_scores=_score(["rod_worth", "beta", "h_gap", "gamma_frac"]),
+        physical_scores=_dataset_score("rea", ["rod_worth", "beta", "h_gap", "gamma_frac"]),
     ),
     DatasetSpec(
         name="powery",
@@ -174,7 +188,7 @@ DATASET_SPECS: list[DatasetSpec] = [
             "C-14",
             "C-15",
         ],
-        physical_scores=_score(["CR1", "CR2", "CR3", "CR4", "CR5", "CR6"]),
+        physical_scores=_dataset_score("powery", ["CR1", "CR2", "CR3", "CR4", "CR5", "CR6"]),
     ),
     DatasetSpec(
         name="htgr",
@@ -183,7 +197,10 @@ DATASET_SPECS: list[DatasetSpec] = [
         input_columns=["theta1", "theta2", "theta3", "theta4", "theta5", "theta6", "theta7", "theta8"],
         output_columns=["fluxQ1", "fluxQ2", "fluxQ3", "fluxQ4"],
         id_columns=["index"],
-        physical_scores=_score(["theta1", "theta2", "theta3", "theta4", "theta5", "theta6", "theta7", "theta8"]),
+        physical_scores=_dataset_score(
+            "htgr",
+            ["theta1", "theta2", "theta3", "theta4", "theta5", "theta6", "theta7", "theta8"],
+        ),
     ),
     DatasetSpec(
         name="microreactor",
@@ -192,7 +209,10 @@ DATASET_SPECS: list[DatasetSpec] = [
         input_columns=["theta1", "theta2", "theta3", "theta4", "theta5", "theta6", "theta7", "theta8"],
         output_columns=["fluxQ1", "fluxQ2", "fluxQ3", "fluxQ4"],
         id_columns=["sample number"],
-        physical_scores=_score(["theta1", "theta2", "theta3", "theta4", "theta5", "theta6", "theta7", "theta8"]),
+        physical_scores=_dataset_score(
+            "microreactor",
+            ["theta1", "theta2", "theta3", "theta4", "theta5", "theta6", "theta7", "theta8"],
+        ),
     ),
 ]
 

@@ -181,7 +181,7 @@ def write_markdown_summary(
             "",
             "## 输出文件",
             "",
-            "- `tables/variable_physical_meaning.csv`：输入/输出变量的物理含义、物理评分和方向预期摘要。",
+            "- `tables/variable_physical_meaning.csv`：输入/输出变量的物理含义、物理评分、评分依据和方向预期摘要。",
             "- `tables/expected_direction_checks.csv`：已配置的物理方向预期，用于敏感性一致性判断。",
             "- `tables/permutation_importance_all.csv`：所有数据集的排列重要性。",
             "- `tables/sensitivity_analysis_all.csv`：关键变量 ±10% 敏感性扰动结果。",
