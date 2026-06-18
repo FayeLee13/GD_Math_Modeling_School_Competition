@@ -16,15 +16,15 @@
 | bwr | full | GradientBoosting | 9 | 5 | 0.9663 | 0.0743 | 0.1546 | 0.0203 | 0.0403 | 0.0204 | 0.0187 | 1.0 |
 | bwr | selected | GradientBoosting | 1 | 5 | 0.9417 | 0.0832 | 0.1765 | 0.03 | 0.0553 | 0.0281 | 0.0138 | 1.0 |
 | chf | full | RandomForest | 6 | 1 | 0.9556 | 195.065 | 325.0459 | 0.015 | 0.0249 | 0.0 | 0.0 | 1.25 |
-| chf | selected | KNN | 2 | 1 | 0.7612 | 524.0836 | 754.2215 | 0.0402 | 0.0578 | 0.0 | 0.0 | 1.0 |
+| chf | selected | KNN | 4 | 1 | 0.9413 | 242.0288 | 373.9559 | 0.0186 | 0.0287 | 0.0 | 0.0 | 1.0 |
 | fp | full | Ridge | 13 | 4 | 0.9775 | 0.9555 | 1.1377 | 0.015 | 0.0178 | 0.0345 | 0.0175 | 1.0 |
-| fp | selected | Ridge | 1 | 4 | 0.3406 | 6.712 | 8.209 | 0.1089 | 0.1332 | 0.179 | 0.0236 | 1.0 |
+| fp | selected | Ridge | 3 | 4 | 0.7362 | 2.0788 | 2.6133 | 0.0608 | 0.0749 | 0.2786 | 0.0493 | 1.0 |
 | heat | full | GradientBoosting | 7 | 1 | 0.9975 | 5.9339 | 7.4742 | 0.0089 | 0.0112 | 0.0 | 0.0 | 1.0 |
 | heat | selected | GradientBoosting | 1 | 1 | 0.9063 | 37.4069 | 45.4545 | 0.0558 | 0.0679 | 0.0 | 0.0 | 1.0 |
 | htgr | full | GradientBoosting | 8 | 4 | 0.903 | 0.001 | 0.0013 | 0.0399 | 0.0519 | 0.0011 | 0.0009 | 1.0 |
-| htgr | selected | GradientBoosting | 3 | 4 | 0.3573 | 0.0027 | 0.0034 | 0.1071 | 0.133 | 0.1313 | 0.0149 | 1.0 |
+| htgr | selected | GradientBoosting | 8 | 4 | 0.903 | 0.001 | 0.0013 | 0.0399 | 0.0519 | 0.0011 | 0.0009 | 1.0 |
 | microreactor | full | GradientBoosting | 8 | 4 | 0.6581 | 2.3598804952570515e+17 | 2.8643704653862576e+17 | 0.0851 | 0.1033 | 0.0174 | 0.0042 | 1.0 |
-| microreactor | selected | GradientBoosting | 2 | 4 | 0.1689 | 3.6165137244342464e+17 | 4.4681069844297734e+17 | 0.1304 | 0.1611 | 0.0306 | 0.0062 | 1.0 |
+| microreactor | selected | GradientBoosting | 8 | 4 | 0.6574 | 2.361796959095455e+17 | 2.8673938815469386e+17 | 0.0851 | 0.1034 | 0.0175 | 0.0042 | 1.0 |
 | powery | full | Ridge | 6 | 22 | 0.9953 | 12.2887 | 16.5786 | 0.0096 | 0.0131 | 0.002 | 0.0021 | 1.0 |
 | powery | selected | Ridge | 5 | 22 | 0.8245 | 70.7871 | 81.5827 | 0.0562 | 0.0647 | 0.2465 | 0.0522 | 1.0 |
 | rea | full | GradientBoosting | 4 | 4 | 0.9927 | 2.82 | 3.8795 | 0.0064 | 0.0098 | 0.0047 | 0.0007 | 1.0 |
@@ -49,9 +49,9 @@
 | heat | T | full | GradientBoosting | 0.9975 | 5.9339 | 7.4742 | 0.0089 | 0.0112 | 1.0 |
 | htgr | fluxQ1 | full | GradientBoosting | 0.9039 | 0.001 | 0.0013 | 0.0397 | 0.051 | 1.0 |
 | htgr | fluxQ2 | full | GradientBoosting | 0.9015 | 0.0011 | 0.0014 | 0.0413 | 0.0533 | 1.0 |
-| htgr | fluxQ3 | full | GradientBoosting | 0.9041 | 0.001 | 0.0013 | 0.0395 | 0.0512 | 1.0 |
+| htgr | fluxQ3 | full | GradientBoosting | 0.9041 | 0.001 | 0.0013 | 0.0395 | 0.0512 | 1.25 |
 | htgr | fluxQ4 | full | GradientBoosting | 0.9025 | 0.001 | 0.0013 | 0.0392 | 0.052 | 1.0 |
-| microreactor | fluxQ1 | full | GradientBoosting | 0.6424 | 2.212571616912609e+17 | 2.73618847508772e+17 | 0.079 | 0.0977 | 1.0 |
+| microreactor | fluxQ1 | full | GradientBoosting | 0.6424 | 2.212571616912609e+17 | 2.73618847508772e+17 | 0.079 | 0.0977 | 1.25 |
 | microreactor | fluxQ2 | full | GradientBoosting | 0.6558 | 2.4160928563602208e+17 | 2.958536446430868e+17 | 0.0895 | 0.1096 | 1.0 |
 | microreactor | fluxQ3 | full | GradientBoosting | 0.6872 | 2.4295157258671142e+17 | 2.901292064325925e+17 | 0.0868 | 0.1036 | 1.0 |
 | microreactor | fluxQ4 | full | GradientBoosting | 0.6472 | 2.381341781888263e+17 | 2.8614648757005178e+17 | 0.085 | 0.1022 | 1.0 |
@@ -72,11 +72,11 @@
 | dataset | full_best_model | selected_best_model | full_input_dim | selected_input_dim | dim_reduction_rate | full_mean_r2 | selected_mean_r2 | delta_r2_selected_minus_full | full_mean_nrmse | selected_mean_nrmse | delta_nrmse_selected_minus_full | screening_assessment |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | bwr | GradientBoosting | GradientBoosting | 9 | 1 | 0.8889 | 0.9663 | 0.9417 | -0.0246 | 0.0403 | 0.0553 | 0.015 | usable_but_accuracy_loss |
-| chf | RandomForest | KNN | 6 | 2 | 0.6667 | 0.9556 | 0.7612 | -0.1944 | 0.0249 | 0.0578 | 0.0329 | too_aggressive_keep_full_or_relax_threshold |
-| fp | Ridge | Ridge | 13 | 1 | 0.9231 | 0.9775 | 0.3406 | -0.637 | 0.0178 | 0.1332 | 0.1154 | too_aggressive_keep_full_or_relax_threshold |
+| chf | RandomForest | KNN | 6 | 4 | 0.3333 | 0.9556 | 0.9413 | -0.0144 | 0.0249 | 0.0287 | 0.0038 | effective_with_small_loss |
+| fp | Ridge | Ridge | 13 | 3 | 0.7692 | 0.9775 | 0.7362 | -0.2414 | 0.0178 | 0.0749 | 0.0571 | too_aggressive_keep_full_or_relax_threshold |
 | heat | GradientBoosting | GradientBoosting | 7 | 1 | 0.8571 | 0.9975 | 0.9063 | -0.0912 | 0.0112 | 0.0679 | 0.0567 | too_aggressive_keep_full_or_relax_threshold |
-| htgr | GradientBoosting | GradientBoosting | 8 | 3 | 0.625 | 0.903 | 0.3573 | -0.5457 | 0.0519 | 0.133 | 0.0811 | too_aggressive_keep_full_or_relax_threshold |
-| microreactor | GradientBoosting | GradientBoosting | 8 | 2 | 0.75 | 0.6581 | 0.1689 | -0.4892 | 0.1033 | 0.1611 | 0.0578 | too_aggressive_keep_full_or_relax_threshold |
+| htgr | GradientBoosting | GradientBoosting | 8 | 8 | 0.0 | 0.903 | 0.903 | -0.0 | 0.0519 | 0.0519 | 0.0 | no_dimension_reduction |
+| microreactor | GradientBoosting | GradientBoosting | 8 | 8 | 0.0 | 0.6581 | 0.6574 | -0.0007 | 0.1033 | 0.1034 | 0.0001 | no_dimension_reduction |
 | powery | Ridge | Ridge | 6 | 5 | 0.1667 | 0.9953 | 0.8245 | -0.1708 | 0.0131 | 0.0647 | 0.0516 | too_aggressive_keep_full_or_relax_threshold |
 | rea | GradientBoosting | GradientBoosting | 4 | 2 | 0.5 | 0.9927 | 0.9858 | -0.0069 | 0.0098 | 0.0149 | 0.0051 | effective_with_small_loss |
 | xs | Ridge | Ridge | 8 | 4 | 0.5 | 0.9999 | 0.9566 | -0.0433 | 0.0014 | 0.035 | 0.0336 | usable_but_accuracy_loss |
@@ -89,11 +89,11 @@
 | rea | 2000 | 4 | 4 | GradientBoosting | 0.9927 | 0.0098 | 0.0047 | 0.0007 | GradientBoosting | 0.9858 | 0.0149 | 2 | 0.5 | -0.0069 | 0.0051 |
 | heat | 1000 | 7 | 1 | GradientBoosting | 0.9975 | 0.0112 | 0.0 | 0.0 | GradientBoosting | 0.9063 | 0.0679 | 1 | 0.8571 | -0.0912 | 0.0567 |
 | powery | 1000 | 6 | 22 | Ridge | 0.9953 | 0.0131 | 0.002 | 0.0021 | Ridge | 0.8245 | 0.0647 | 5 | 0.1667 | -0.1708 | 0.0516 |
-| fp | 400 | 13 | 4 | Ridge | 0.9775 | 0.0178 | 0.0345 | 0.0175 | Ridge | 0.3406 | 0.1332 | 1 | 0.9231 | -0.637 | 0.1154 |
-| chf | 2500 | 6 | 1 | RandomForest | 0.9556 | 0.0249 | 0.0 | 0.0 | KNN | 0.7612 | 0.0578 | 2 | 0.6667 | -0.1944 | 0.0329 |
+| fp | 400 | 13 | 4 | Ridge | 0.9775 | 0.0178 | 0.0345 | 0.0175 | Ridge | 0.7362 | 0.0749 | 3 | 0.7692 | -0.2414 | 0.0571 |
+| chf | 2500 | 6 | 1 | RandomForest | 0.9556 | 0.0249 | 0.0 | 0.0 | KNN | 0.9413 | 0.0287 | 4 | 0.3333 | -0.0144 | 0.0038 |
 | bwr | 2000 | 9 | 5 | GradientBoosting | 0.9663 | 0.0403 | 0.0204 | 0.0187 | GradientBoosting | 0.9417 | 0.0553 | 1 | 0.8889 | -0.0246 | 0.015 |
-| htgr | 3004 | 8 | 4 | GradientBoosting | 0.903 | 0.0519 | 0.0011 | 0.0009 | GradientBoosting | 0.3573 | 0.133 | 3 | 0.625 | -0.5457 | 0.0811 |
-| microreactor | 751 | 8 | 4 | GradientBoosting | 0.6581 | 0.1033 | 0.0174 | 0.0042 | GradientBoosting | 0.1689 | 0.1611 | 2 | 0.75 | -0.4892 | 0.0578 |
+| htgr | 3004 | 8 | 4 | GradientBoosting | 0.903 | 0.0519 | 0.0011 | 0.0009 | GradientBoosting | 0.903 | 0.0519 | 8 | 0.0 | -0.0 | 0.0 |
+| microreactor | 751 | 8 | 4 | GradientBoosting | 0.6581 | 0.1033 | 0.0174 | 0.0042 | GradientBoosting | 0.6574 | 0.1034 | 8 | 0.0 | -0.0007 | 0.0001 |
 
 ## 输出文件
 

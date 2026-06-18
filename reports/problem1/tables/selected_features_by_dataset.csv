@@ -1,10 +1,10 @@
 ﻿dataset,selected_features
 bwr,CRD
-chf,"L (m), Xe (-)"
-fp,ax_pow
+chf,"Xe (-), L (m), G (kg m-2s-1), P (kPa)"
+fp,"ax_pow, clad_T, porosity"
 heat,qprime
-htgr,"theta1, theta8, theta5"
-microreactor,"theta6, theta4"
+htgr,"theta1, theta8, theta5, theta4, theta2, theta3, theta7, theta6"
+microreactor,"theta6, theta4, theta7, theta3, theta1, theta5, theta2, theta8"
 powery,"CR4, CR3, CR2, CR5, CR1"
 rea,"rod_worth, beta"
 xs,"FissionThermal, CaptureFast, FissionFast, CaptureThermal"
