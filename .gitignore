@@ -19,4 +19,7 @@ temp/
 .vscode/
 *.log
 *.tmp
-helper/
+helper/*
+!helper/**/*.md
+!helper/**/*.pdf
+*.zip
